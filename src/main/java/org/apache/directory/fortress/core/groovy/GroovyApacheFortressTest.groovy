@@ -6,22 +6,22 @@ import org.apache.directory.fortress.core.model.Permission
 import org.apache.directory.fortress.core.model.RoleConstraint
 import org.apache.directory.fortress.core.model.Session
 import org.apache.directory.fortress.core.model.User;
-//import org.apache.directory.fortress.core.*
 
 class GroovyApacheFortressTest
 {
     def abacConstraints()
     {
-        print( 'This is my first Groovy Example')
-
+        println( 'Test Curly')
         isWasher ( 'curly', 'password', 'north')
         isWasher ( 'curly', 'password', 'south')
         isTeller ( 'curly', 'password', 'east')
 
+        println( 'Test Moe')
         isWasher ( 'moe', 'password', 'east')
         isWasher ( 'moe', 'password', 'south')
         isTeller ( 'moe', 'password', 'north')
 
+        println( 'Test Larry')
         isWasher ( 'larry', 'password', 'north')
         isWasher ( 'larry', 'password', 'east')
         isTeller ( 'larry', 'password', 'south')
