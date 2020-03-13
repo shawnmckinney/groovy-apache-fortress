@@ -11,25 +11,26 @@ class GroovyApacheFortressTest
 {
     def abacConstraints()
     {
-        println( 'Test Curly')
-        isWasher ( 'curly', 'password', 'north')
-        isWasher ( 'curly', 'password', 'south')
-        isTeller ( 'curly', 'password', 'east')
+        // These should all pass...
+        println( 'Test Curly:')
+        isWasher ( 'Curly', 'password', 'North')
+        isWasher ( 'Curly', 'password', 'South')
+        isTeller ( 'Curly', 'password', 'East')
 
-        println( 'Test Moe')
-        isWasher ( 'moe', 'password', 'east')
-        isWasher ( 'moe', 'password', 'south')
-        isTeller ( 'moe', 'password', 'north')
+        println( 'Test Moe:')
+        isWasher ( 'Moe', 'password', 'East')
+        isWasher ( 'Moe', 'password', 'South')
+        isTeller ( 'Moe', 'password', 'North')
 
-        println( 'Test Larry')
-        isWasher ( 'larry', 'password', 'north')
-        isWasher ( 'larry', 'password', 'east')
-        isTeller ( 'larry', 'password', 'south')
+        println( 'Test Larry:')
+        isWasher ( 'Larry', 'password', 'North')
+        isWasher ( 'Larry', 'password', 'East')
+        isTeller ( 'Larry', 'password', 'South')
     }
-
 
     def isWasher = { String userid, String password, String value ->
         Session session = createSession( userid, password, 'locale', value )
+        assert session != null && session.isAuthenticated()
         assert checkAccess( session, "Currency", "dry") == true
         assert checkAccess( session, "Currency", "rinse") == true
         assert checkAccess( session, "Currency", "soak") == true
@@ -38,11 +39,12 @@ class GroovyApacheFortressTest
         assert checkAccess( session, "Account", "inquiry") == false
         assert checkAccess( session, "Account", "withdrawal") == false
 
-        println ( "${userid} is a washer")
+        println ( "Now ${userid}'s a Washer in the ${value}.")
     }
 
     def isTeller = { String userid, String password, String value ->
         Session session = createSession( userid, password, 'locale', value )
+        assert session != null && session.isAuthenticated()
         assert checkAccess( session, "Currency", "dry") == false
         assert checkAccess( session, "Currency", "rinse") == false
         assert checkAccess( session, "Currency", "soak") == false
@@ -51,7 +53,7 @@ class GroovyApacheFortressTest
         assert checkAccess( session, "Account", "inquiry") == true
         assert checkAccess( session, "Account", "withdrawal") == true
 
-        println ( "${userid} is a teller")
+        println ( "Now ${userid}'s a Teller in the ${value}.")
     }
 
     def createSession = { String userId, String password, String key, String value ->
@@ -71,8 +73,8 @@ class GroovyApacheFortressTest
 
     static void main (def args)
     {
-        def first = new GroovyApacheFortressTest()
-        first.abacConstraints()
+        def test = new GroovyApacheFortressTest()
+        test.abacConstraints()
         System.exit( 0 );
     }
 }
