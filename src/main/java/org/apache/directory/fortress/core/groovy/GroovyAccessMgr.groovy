@@ -9,18 +9,34 @@ import org.apache.directory.fortress.core.model.User;
 
 class GroovyAccessMgr
 {
-    def createSession = { String userId, String password, String key, String value ->
+    def Session createSession ( String userId, String password, String key = null, String value = null )
+    {
         AccessMgr accessMgr = AccessMgrFactory.createInstance()
-        List<RoleConstraint> constraints = new ArrayList()
-        RoleConstraint constraint = new RoleConstraint()
-        constraint.setKey( key )
-        constraint.setValue( value )
-        constraints.add( constraint )
-        return accessMgr.createSession( new User ( userId, password ), constraints, false)
+        User user = new User( userId, password)
+        Session session
+        if( key != null && value != null)
+        {
+            List<RoleConstraint> constraints = new ArrayList()
+            RoleConstraint constraint = new RoleConstraint()
+            constraint.setKey( key )
+            constraint.setValue( value )
+            constraints.add( constraint )
+            accessMgr.createSession( user, constraints, false)
+        }
+        else
+        {
+            accessMgr.createSession( user, false)
+        }
     }
 
-    def checkAccess = { Session session, String object, String operation ->
+    def boolean checkAccess ( Session session, String object, String operation, String objId = null )
+    {
         AccessMgr accessMgr = AccessMgrFactory.createInstance()
-        return accessMgr.checkAccess( session, new Permission( object, operation ) )
+        Permission perm = new Permission(object, operation)
+        if( objId != null )
+        {
+            perm.objId = objId
+        }
+        accessMgr.checkAccess( session, perm )
     }
 }

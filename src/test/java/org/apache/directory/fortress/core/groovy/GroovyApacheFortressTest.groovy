@@ -36,7 +36,7 @@ class GroovyApacheFortressTest
         assert !aMgr.checkAccess( session, "Account", "inquiry")
         assert !aMgr.checkAccess( session, "Account", "withdrawal")
 
-        println ( "Now ${userid}'s a Washer in the ${value}.")
+        println ( "Now $userid's a Washer in the $value.")
     }
 
     def isTeller = { String userid, String password, String value ->
@@ -52,7 +52,7 @@ class GroovyApacheFortressTest
         assert aMgr.checkAccess( session, "Account", "inquiry")
         assert aMgr.checkAccess( session, "Account", "withdrawal")
 
-        println ( "Now ${userid}'s a Teller in the ${value}.")
+        println ( "Now $userid's a Teller in the $value.")
     }
 
     static void main (def args)

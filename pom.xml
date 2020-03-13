@@ -7,10 +7,9 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>GroovyFortress</name>
-    <description>A Groovy Apache Fortress Core</description>
+    <description>A Groovy Wrapper for Apache Fortress Core</description>
 
     <dependencies>
-
         <dependency>
             <groupId>org.apache.directory.fortress</groupId>
             <artifactId>fortress-core</artifactId>
@@ -38,15 +37,14 @@
                 </configuration>
 
                 <dependencies>
-
                     <dependency>
                         <groupId>org.codehaus.groovy</groupId>
                         <artifactId>groovy-eclipse-compiler</artifactId>
                         <version>2.7.0-01</version>
                     </dependency>
-
                 </dependencies>
             </plugin>
+<!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>
@@ -60,6 +58,7 @@
                     </sourceIncludes>
                 </configuration>
             </plugin>
+-->
         </plugins>
     </build>
 </project>
