@@ -1,14 +1,15 @@
 package org.apache.directory.fortress.core.groovy
 
-import org.apache.directory.fortress.core.model.Session
-
 class GroovyApacheFortressTest
 {
+    GroovyAccessMgr aMgr = new GroovyAccessMgr()
+
     def abacConstraints()
     {
         // These should all pass...
         println( 'Test Curly:')
-        isWasher ( 'Curly', 'password', 'North')
+
+        isWasher3 ( 'Curly', 'password', 'North')
         isWasher ( 'Curly', 'password', 'South')
         isTeller ( 'Curly', 'password', 'East')
 
@@ -21,36 +22,51 @@ class GroovyApacheFortressTest
         isWasher ( 'Larry', 'password', 'North')
         isWasher ( 'Larry', 'password', 'East')
         isTeller ( 'Larry', 'password', 'South')
+
+    }
+
+    def isWasher3 = { String userid, String password, String value ->
+
+        assert aMgr.createSession2 (  userid, password, 'locale', value )
+
+        assert aMgr.checkAccess("Currency", "dry")
+        assert aMgr.checkAccess( "Currency", "rinse")
+        assert aMgr.checkAccess( "Currency", "soak")
+
+        assert !aMgr.checkAccess( "Account", "deposit")
+        assert !aMgr.checkAccess( "Account", "inquiry")
+        assert !aMgr.checkAccess( "Account", "withdrawal")
+
+        println ( "Now $userid's a Washer in the $value.  3")
+        //result = "Now $userid's a Washer in the $value."
     }
 
     def isWasher = { String userid, String password, String value ->
-        GroovyAccessMgr aMgr = new GroovyAccessMgr()
-        Session session = aMgr.createSession( userid, password, 'locale', value )
-        assert session != null && session.isAuthenticated()
 
-        assert aMgr.checkAccess(session, "Currency", "dry")
-        assert aMgr.checkAccess( session, "Currency", "rinse")
-        assert aMgr.checkAccess( session, "Currency", "soak")
+        assert aMgr.createSession (  userid, password, 'locale', value )
 
-        assert !aMgr.checkAccess( session, "Account", "deposit")
-        assert !aMgr.checkAccess( session, "Account", "inquiry")
-        assert !aMgr.checkAccess( session, "Account", "withdrawal")
+        assert aMgr.checkAccess("Currency", "dry")
+        assert aMgr.checkAccess("Currency", "rinse")
+        assert aMgr.checkAccess("Currency", "soak")
+
+        assert !aMgr.checkAccess("Account", "deposit")
+        assert !aMgr.checkAccess("Account", "inquiry")
+        assert !aMgr.checkAccess("Account", "withdrawal")
 
         println ( "Now $userid's a Washer in the $value.")
     }
 
     def isTeller = { String userid, String password, String value ->
-        GroovyAccessMgr aMgr = new GroovyAccessMgr()
-        Session session = aMgr.createSession( userid, password, 'locale', value )
-        assert session != null && session.isAuthenticated()
 
-        assert !aMgr.checkAccess(session, "Currency", "dry")
-        assert !aMgr.checkAccess(session, "Currency", "rinse")
-        assert !aMgr.checkAccess( session, "Currency", "soak")
+        assert aMgr.createSession (  userid, password, 'locale', value )
 
-        assert aMgr.checkAccess( session, "Account", "deposit")
-        assert aMgr.checkAccess( session, "Account", "inquiry")
-        assert aMgr.checkAccess( session, "Account", "withdrawal")
+        assert !aMgr.checkAccess("Currency", "dry")
+        assert !aMgr.checkAccess("Currency", "rinse")
+        assert !aMgr.checkAccess("Currency", "soak")
+
+        assert aMgr.checkAccess( "Account", "deposit")
+        assert aMgr.checkAccess( "Account", "inquiry")
+        assert aMgr.checkAccess( "Account", "withdrawal")
 
         println ( "Now $userid's a Teller in the $value.")
     }
