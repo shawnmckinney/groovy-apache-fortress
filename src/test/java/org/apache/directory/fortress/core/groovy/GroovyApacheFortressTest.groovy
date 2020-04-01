@@ -27,48 +27,75 @@ class GroovyApacheFortressTest
 
     def isWasher3 = { String userid, String password, String value ->
 
-        assert aMgr.createSession2 (  userid, password, 'locale', value )
+        GroovyAccessMgr rbac = new GroovyAccessMgr()
+        //assert { rbac.start userid, "foo", 'locale', value }
+        //assert { rbac.start userid, null, 'locale', value }
+        //def result = rbac.start4 userid, null, 'locale', value
+        assert { rbac.start4 userid, null, 'locale', value }
+        //println "start: $result"
+        //def result = rbac.canDo "Currency", "dry"
+        assert { rbac.canDo "Currency", "dry" }
+        //println "canDo: $result"
+        def result = rbac.canDo "Account", "deposit"
+        assert (!result)
+        //assert { rbac.canDo "Currency", "dry" }
+        //assert { rbac.canDo "Currency", "soak" }
 
-        assert aMgr.checkAccess("Currency", "dry")
-        assert aMgr.checkAccess( "Currency", "rinse")
-        assert aMgr.checkAccess( "Currency", "soak")
+        //assert not { rbac.canDo "Account", "deposit" } == false
+        //assert { rbac.canDo "Account", "deposit" } == false
+        //def result = rbac.canDo "Account", "deposit"
+        //assert !( result )
 
-        assert !aMgr.checkAccess( "Account", "deposit")
-        assert !aMgr.checkAccess( "Account", "inquiry")
-        assert !aMgr.checkAccess( "Account", "withdrawal")
+        //assert ( aMgr.canDo "Currency", "dry" )
+/*
+        assert aMgr.isOk( "Currency", "rinse")
+        assert aMgr.isOk( "Currency", "soak")
 
-        println ( "Now $userid's a Washer in the $value.  3")
+        assert !aMgr.isOk( "Account", "deposit")
+        assert !aMgr.isOk( "Account", "inquiry")
+        assert !aMgr.isOk( "Account", "withdrawal")
+*/
+
+        println ( "End $userid Washer in the $value.")
         //result = "Now $userid's a Washer in the $value."
+    }
+
+    def not = { arg ->
+        return arg == false
     }
 
     def isWasher = { String userid, String password, String value ->
 
-        assert aMgr.createSession (  userid, password, 'locale', value )
+        assert aMgr.start (  userid, password, 'locale', value )
 
-        assert aMgr.checkAccess("Currency", "dry")
-        assert aMgr.checkAccess("Currency", "rinse")
-        assert aMgr.checkAccess("Currency", "soak")
+        assert aMgr.isOk("Currency", "dry")
+        assert aMgr.isOk("Currency", "rinse")
+        assert aMgr.isOk("Currency", "soak")
 
-        assert !aMgr.checkAccess("Account", "deposit")
-        assert !aMgr.checkAccess("Account", "inquiry")
-        assert !aMgr.checkAccess("Account", "withdrawal")
+        assert !aMgr.isOk("Account", "deposit")
+        assert !aMgr.isOk("Account", "inquiry")
+        assert !aMgr.isOk("Account", "withdrawal")
 
-        println ( "Now $userid's a Washer in the $value.")
+        aMgr.end()
+
+        println ( "End $userid Washer in the $value.")
     }
 
     def isTeller = { String userid, String password, String value ->
 
-        assert aMgr.createSession (  userid, password, 'locale', value )
+        assert aMgr.start (  userid, password, 'locale', value )
 
-        assert !aMgr.checkAccess("Currency", "dry")
-        assert !aMgr.checkAccess("Currency", "rinse")
-        assert !aMgr.checkAccess("Currency", "soak")
+        assert !aMgr.isOk("Currency", "dry")
+        assert !aMgr.isOk("Currency", "rinse")
+        assert !aMgr.isOk("Currency", "soak")
 
-        assert aMgr.checkAccess( "Account", "deposit")
-        assert aMgr.checkAccess( "Account", "inquiry")
-        assert aMgr.checkAccess( "Account", "withdrawal")
+        assert aMgr.isOk( "Account", "deposit")
+        assert aMgr.isOk( "Account", "inquiry")
+        assert aMgr.isOk( "Account", "withdrawal")
 
-        println ( "Now $userid's a Teller in the $value.")
+        aMgr.end()
+
+        println ( "End $userid Teller in the $value.")
     }
 
     static void main (def args)
