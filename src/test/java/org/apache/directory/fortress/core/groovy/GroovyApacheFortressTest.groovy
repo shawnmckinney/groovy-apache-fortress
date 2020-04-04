@@ -28,36 +28,23 @@ class GroovyApacheFortressTest
     def isWasher3 = { String userid, String password, String value ->
 
         GroovyAccessMgr rbac = new GroovyAccessMgr()
-        //assert { rbac.start userid, "foo", 'locale', value }
-        //assert { rbac.start userid, null, 'locale', value }
-        //def result = rbac.start4 userid, null, 'locale', value
-        assert { rbac.start4 userid, null, 'locale', value }
-        //println "start: $result"
-        //def result = rbac.canDo "Currency", "dry"
-        assert { rbac.canDo "Currency", "dry" }
-        //println "canDo: $result"
-        def result = rbac.canDo "Account", "deposit"
+        def result = rbac.start4 userid, null, 'locale', value
+        assert(result)
+        result = rbac.canDo "Currency", "dry"
+        assert(result)
+        result = rbac.canDo "Currency", "soak"
+        assert(result)
+        result = rbac.canDo "Currency", "rinse"
+        assert(result)
+
+        result = rbac.canDo "Account", "deposit"
         assert (!result)
-        //assert { rbac.canDo "Currency", "dry" }
-        //assert { rbac.canDo "Currency", "soak" }
-
-        //assert not { rbac.canDo "Account", "deposit" } == false
-        //assert { rbac.canDo "Account", "deposit" } == false
-        //def result = rbac.canDo "Account", "deposit"
-        //assert !( result )
-
-        //assert ( aMgr.canDo "Currency", "dry" )
-/*
-        assert aMgr.isOk( "Currency", "rinse")
-        assert aMgr.isOk( "Currency", "soak")
-
-        assert !aMgr.isOk( "Account", "deposit")
-        assert !aMgr.isOk( "Account", "inquiry")
-        assert !aMgr.isOk( "Account", "withdrawal")
-*/
+        result = rbac.canDo "Account", "inquiry"
+        assert (!result)
+        result = rbac.canDo "Account", "withdrawal"
+        assert (!result)
 
         println ( "End $userid Washer in the $value.")
-        //result = "Now $userid's a Washer in the $value."
     }
 
     def not = { arg ->
