@@ -9,7 +9,7 @@ class GroovyApacheFortressTest
         // These should all pass...
         println( 'Test Curly:')
 
-        isWasher4 ( 'Curly', 'password', 'North')
+        isWasher ( 'Curly', 'password', 'North')
         isWasher ( 'Curly', 'password', 'South')
         isTeller ( 'Curly', 'password', 'East')
 
@@ -25,63 +25,18 @@ class GroovyApacheFortressTest
 
     }
 
-    def isWasher4 = { String userid, String password, String value ->
-
-        GroovyAccessMgr rbac = new GroovyAccessMgr()
-        //boolean result = rbac.start userid, "password", locale: value, roles: ["washers", "tellers"], foo: 'bar'
-        boolean result = rbac.start userid, locale: value, roles: ["washers", "tellers"], foo: 'bar'
-
-        assert(result)
-        result = rbac.canDo "Currency", "dry"
-        assert(result)
-        result = rbac.canDo "Currency", "soak"
-        assert(result)
-        result = rbac.canDo "Currency", "rinse"
-        assert(result)
-
-        result = rbac.canDo "Account", "deposit"
-        assert (!result)
-        result = rbac.canDo "Account", "inquiry"
-        assert (!result)
-        result = rbac.canDo "Account", "withdrawal"
-        assert (!result)
-
-        println ( "End $userid Washer in the $value.")
-    }
-
-    def isWasher3 = { String userid, String password, String value ->
-
-        GroovyAccessMgr rbac = new GroovyAccessMgr()
-        def result = rbac.start4 userid, null, 'locale', value, 'key2', 'value2', 'key3', 'value3'
-        assert(result)
-        result = rbac.canDo "Currency", "dry"
-        assert(result)
-        result = rbac.canDo "Currency", "soak"
-        assert(result)
-        result = rbac.canDo "Currency", "rinse"
-        assert(result)
-
-        result = rbac.canDo "Account", "deposit"
-        assert (!result)
-        result = rbac.canDo "Account", "inquiry"
-        assert (!result)
-        result = rbac.canDo "Account", "withdrawal"
-        assert (!result)
-
-        println ( "End $userid Washer in the $value.")
-    }
-
     def isWasher = { String userid, String password, String value ->
 
-        assert aMgr.start (  userid, password, 'locale', value )
+        GroovyAccessMgr rbac = new GroovyAccessMgr()
+        assert ( rbac.start ( userid, locale: value, roles: ["washers", "tellers"] ) )
 
-        assert aMgr.isOk("Currency", "dry")
-        assert aMgr.isOk("Currency", "rinse")
-        assert aMgr.isOk("Currency", "soak")
+        assert rbac.canDo("Currency", "dry")
+        assert rbac.canDo("Currency", "rinse")
+        assert rbac.canDo("Currency", "soak")
 
-        assert !aMgr.isOk("Account", "deposit")
-        assert !aMgr.isOk("Account", "inquiry")
-        assert !aMgr.isOk("Account", "withdrawal")
+        assert !rbac.canDo("Account", "deposit")
+        assert !rbac.canDo("Account", "inquiry")
+        assert !rbac.canDo("Account", "withdrawal")
 
         aMgr.end()
 
@@ -90,15 +45,17 @@ class GroovyApacheFortressTest
 
     def isTeller = { String userid, String password, String value ->
 
-        assert aMgr.start (  userid, password, 'locale', value )
+        GroovyAccessMgr rbac = new GroovyAccessMgr()
 
-        assert !aMgr.isOk("Currency", "dry")
-        assert !aMgr.isOk("Currency", "rinse")
-        assert !aMgr.isOk("Currency", "soak")
+        assert ( rbac.start ( userid, locale: value, roles: ["washers", "tellers"] ) )
 
-        assert aMgr.isOk( "Account", "deposit")
-        assert aMgr.isOk( "Account", "inquiry")
-        assert aMgr.isOk( "Account", "withdrawal")
+        assert !rbac.canDo("Currency", "dry")
+        assert !rbac.canDo("Currency", "rinse")
+        assert !rbac.canDo("Currency", "soak")
+
+        assert rbac.canDo( "Account", "deposit")
+        assert rbac.canDo( "Account", "inquiry")
+        assert rbac.canDo( "Account", "withdrawal")
 
         aMgr.end()
 
