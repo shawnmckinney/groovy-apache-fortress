@@ -8,21 +8,42 @@ class GroovyApacheFortressTest
     {
         // These should all pass...
         println( 'Test Curly:')
-
+        isNeither ( 'Curly', 'password')
         isWasher ( 'Curly', 'password', 'North')
         isWasher ( 'Curly', 'password', 'South')
         isTeller ( 'Curly', 'password', 'East')
+        isTeller ( 'Curly', 'password', 'East')
 
         println( 'Test Moe:')
+        isNeither ( 'Moe', 'password')
         isWasher ( 'Moe', 'password', 'East')
         isWasher ( 'Moe', 'password', 'South')
         isTeller ( 'Moe', 'password', 'North')
 
         println( 'Test Larry:')
-        isWasher ( 'Larry', 'password', 'North')
-        isWasher ( 'Larry', 'password', 'East')
-        isTeller ( 'Larry', 'password', 'South')
+        isNeither ( 'Larry', null)
+        isWasher ( 'Larry', null, 'North')
+        isWasher ( 'Larry', null, 'East')
+        isTeller ( 'Larry', null, 'South')
+    }
 
+    def isNeither ( String userid, String password )
+    {
+        GroovyAccessMgr rbac = new GroovyAccessMgr()
+        // if we don't load specify locale constraint, neither role will be activated:
+        assert ( rbac.start ( userid, roles: ["washers", "tellers"] ) )
+
+        assert !rbac.canDo("Currency", "dry")
+        assert !rbac.canDo("Currency", "rinse")
+        assert !rbac.canDo("Currency", "soak")
+
+        assert !rbac.canDo("Account", "deposit")
+        assert !rbac.canDo("Account", "inquiry")
+        assert !rbac.canDo("Account", "withdrawal")
+
+        aMgr.end()
+
+        println ( "End $userid Neither.")
     }
 
     def isWasher ( String userid, String password, String value )
