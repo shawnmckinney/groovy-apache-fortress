@@ -51,7 +51,12 @@ class GroovyAccessMgr
                 user = new User( userId, password, roles )
             else
                 user = new User( userId, password )
-            session = accessMgr.createSession( user, constraints, (password == null) )
+
+            if ( constraints == null )
+                session = accessMgr.createSession( user, (password == null) )
+            else
+                session = accessMgr.createSession( user, constraints, (password == null) )
+
             rc = true
         }
         catch ( e )
