@@ -25,8 +25,8 @@ class GroovyApacheFortressTest
 
     }
 
-    def isWasher = { String userid, String password, String value ->
-
+    def isWasher ( String userid, String password, String value )
+    {
         GroovyAccessMgr rbac = new GroovyAccessMgr()
         assert ( rbac.start ( userid, locale: value, roles: ["washers", "tellers"] ) )
 
@@ -43,8 +43,8 @@ class GroovyApacheFortressTest
         println ( "End $userid Washer in the $value.")
     }
 
-    def isTeller = { String userid, String password, String value ->
-
+    def isTeller ( String userid, String password, String value )
+    {
         GroovyAccessMgr rbac = new GroovyAccessMgr()
 
         assert ( rbac.start ( userid, locale: value, roles: ["washers", "tellers"] ) )

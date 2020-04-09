@@ -35,6 +35,7 @@ class GroovyAccessMgr
             {
                 if( constraints == null)
                     constraints = new ArrayList();
+
                 RoleConstraint constraint = new RoleConstraint()
                 constraint.setKey( entry.key )
                 constraint.setValue( entry.value )
