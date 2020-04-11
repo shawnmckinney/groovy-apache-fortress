@@ -7,6 +7,7 @@ import org.apache.directory.fortress.core.DelAdminMgr
 import org.apache.directory.fortress.core.DelAdminMgrFactory
 import org.apache.directory.fortress.core.model.FortEntity
 import org.apache.directory.fortress.core.model.OrgUnit
+import org.apache.directory.fortress.core.model.PermGrant
 import org.apache.directory.fortress.core.model.PermObj
 import org.apache.directory.fortress.core.model.Permission
 import org.apache.directory.fortress.core.model.Role
@@ -201,6 +202,26 @@ class GroovyAdminMgr
                             break
                     }
                     break
+                case 'PERMGRANT':
+                    AdminMgr adminMgr = AdminMgrFactory.createInstance()
+                    options.put(FQDN, PermGrant.class.getName())
+                    PermGrant grant = get( options, BASE_CLASS )
+                    print "permgrant: $grant "
+                    switch ( operation.toUpperCase() )
+                    {
+                        case 'ADD':
+                            println ' add...'
+                            adminMgr.grantPermission( new Permission( grant.objName, grant.opName ), new Role( grant.roleNm ) )
+                            break
+                        case 'DELETE':
+                            println ' delete...'
+                            adminMgr.revokePermission( new Permission( grant.objName, grant.opName ), new Role( grant.roleNm ) )
+                            break;
+                        default:
+                            break
+                    }
+                    break
+
 
                 default:
                     reason = 'Invalid operation'
