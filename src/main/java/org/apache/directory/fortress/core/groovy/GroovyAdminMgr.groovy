@@ -20,25 +20,25 @@ import com.fasterxml.jackson.databind.DeserializationFeature
 class GroovyAdminMgr
 {
     String reason
-    private String FQDN = 'fqcn'
+    // Root element of the fortress entity model.
     private Class BASE_CLASS = FortEntity.class
+
+    // A property on the model used to map from FortressEntity to the particular subclass, user, role, ...
+    private String FQDN = 'fqcn'
 
     private initialize()
     {
         reason = null
     }
 
-    def get( Map<String, String> map, Class cls, boolean ignore=false )
-    {
-        ObjectMapper mapper
-        if ( !ignore )
-            mapper = new ObjectMapper()
-        else
-            mapper = new ObjectMapper().configure( DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        return mapper.convertValue(map, cls)
-    }
-
-    boolean doIt( Map<String, String> options=[:], String operation, String entity )
+    /**
+     * Wrapper for Apache Fortress Admin Manager APIs.
+     * @param options Contains map that is bound for fortress entity.
+     * @param operation name.  Dependent on entity, usually add or delete, enable is for role constraint.
+     * @param entity name, i.e. not fully qualified class name. e.g. user, role, permission, permobj, roleconstraint, etc...
+     * @return false if error or exception occurs.  Relies on the apache fortress runtime for validation checks.
+     */
+    boolean edit (Map<String, String> options=[:], String operation, String entity )
     {
         boolean rc = false
         initialize()
@@ -65,10 +65,11 @@ class GroovyAdminMgr
                             break;
                         default:
                             reason = 'Invalid USER operation'
-                            println "************  Error GroovyAdminMgr: $reason"
+                            println "***  Error GroovyAdminMgr: $reason"
                             break
                     }
                     break
+
                 case 'ORGUNIT':
                     DelAdminMgr delMgr = DelAdminMgrFactory.createInstance()
                     options.put(FQDN, OrgUnit.class.getName())
@@ -86,10 +87,11 @@ class GroovyAdminMgr
                             break
                         default:
                             reason = 'Invalid ORGUNIT operation'
-                            println "************  Error GroovyAdminMgr: $reason"
+                            println "***  Error GroovyAdminMgr: $reason"
                             break
                     }
                     break
+
                 case 'ROLE':
                     AdminMgr adminMgr = AdminMgrFactory.createInstance()
                     options.put(FQDN, Role.class.getName())
@@ -107,7 +109,7 @@ class GroovyAdminMgr
                             break
                         default:
                             reason = 'Invalid ROLE operation'
-                            println "************  Error GroovyAdminMgr: $reason"
+                            println "***  Error GroovyAdminMgr: $reason"
                             break
                     }
                     break
@@ -135,7 +137,7 @@ class GroovyAdminMgr
                         break
                         default:
                             reason = 'Invalid SDSET operation'
-                            println "************  Error GroovyAdminMgr: $reason"
+                            println "***  Error GroovyAdminMgr: $reason"
                             break
                     }
                     break
@@ -175,7 +177,7 @@ class GroovyAdminMgr
                             break;
                         default:
                             reason = 'Invalid ROLECONSTRAINT operation'
-                            println "************  Error GroovyAdminMgr: $reason"
+                            println "***  Error GroovyAdminMgr: $reason"
                             break
                     }
                     break
@@ -197,7 +199,7 @@ class GroovyAdminMgr
                             break
                         default:
                             reason = 'Invalid USERROLE operation'
-                            println "************  Error GroovyAdminMgr: $reason"
+                            println "***  Error GroovyAdminMgr: $reason"
                             break
                     }
                     break
@@ -219,7 +221,7 @@ class GroovyAdminMgr
                             break
                         default:
                             reason = 'Invalid PERMISSION operation'
-                            println "************  Error GroovyAdminMgr: $reason"
+                            println "***  Error GroovyAdminMgr: $reason"
                             break
                     }
                     break
@@ -241,7 +243,7 @@ class GroovyAdminMgr
                             break
                         default:
                             reason = 'Invalid PERMOBJ operation'
-                            println "************  Error GroovyAdminMgr: $reason"
+                            println "***  Error GroovyAdminMgr: $reason"
                             break
                     }
                     break
@@ -262,31 +264,38 @@ class GroovyAdminMgr
                             break
                         default:
                             reason = 'Invalid PERMGRANT operation'
-                            println "************  Error GroovyAdminMgr: $reason"
+                            println "***  Error GroovyAdminMgr: $reason"
                             break
                     }
                     break
 
                 default:
                     reason = 'Invalid entity'
-                    println "************  Error GroovyAdminMgr: $reason"
+                    println "***  Error GroovyAdminMgr: $reason"
                     return false
             }
             rc = true
-
         }
         catch ( e )
         {
             reason = e.toString()
-            println "************  Exception GroovyAdminMgr: $reason"
+            println "***  Exception GroovyAdminMgr: $reason"
         }
         return rc
     }
-
 
     def end( )
     {
         reason = null
     }
 
+    private def get ( Map<String, String> map, Class cls, boolean ignore=false )
+    {
+        ObjectMapper mapper
+        if ( !ignore )
+            mapper = new ObjectMapper()
+        else
+            mapper = new ObjectMapper().configure( DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        return mapper.convertValue(map, cls)
+    }
 }
