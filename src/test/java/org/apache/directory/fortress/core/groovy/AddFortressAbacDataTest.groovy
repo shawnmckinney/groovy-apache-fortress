@@ -1,5 +1,7 @@
 package org.apache.directory.fortress.core.groovy
 
+import org.apache.directory.fortress.core.model.SDSet
+
 class AddFortressAbacDataTest
 {
     GroovyAccessMgr aMgr = new GroovyAccessMgr()
@@ -18,10 +20,11 @@ class AddFortressAbacDataTest
 
         admin.doIt( 'add', 'orgunit', name: 'Default', type: 'USER' )
         admin.doIt( 'add', 'role', name: 'Washer' )
-        admin.doIt( 'enable', 'roleconstraint', id: 'Washer', key: 'locale',  )
+        admin.doIt( 'enable', 'roleconstraint', id: 'Washer', key: 'locale' )
         admin.doIt( 'add', 'role', name: 'Teller' )
-        admin.doIt( 'enable', 'roleconstraint', id: 'Teller', key: 'locale',  )
-        admin.doIt( 'enable', 'roleconstraint', id: 'Teller', key: 'strength',  )
+        admin.doIt( 'enable', 'roleconstraint', id: 'Teller', key: 'locale' )
+        admin.doIt( 'enable', 'roleconstraint', id: 'Teller', key: 'strength'  )
+        admin.doIt( 'add', 'sdset', type: 'DYNAMIC', name: 'Bankers', members: ["Teller", "Washer"], cardinality: '2', description: 'Ducks in a row' )
 
         admin.doIt( 'add', 'user', userId: 'huey', password: 'password', ou: 'Default', description: 'Groovy Test' )
         admin.doIt( 'add', 'userrole', userId: 'huey', name: 'Teller' )
@@ -83,6 +86,7 @@ class AddFortressAbacDataTest
         admin.doIt( 'delete', 'permobj', objName: 'Account', ou: 'Default' )
         admin.doIt( 'delete', 'orgunit', name: 'Default', type: 'PERM' )
 
+        admin.doIt( 'delete', 'sdset', type: 'DYNAMIC', name: 'Bankers' )
         admin.doIt( 'disable', 'roleconstraint', id: 'Washer', key: 'locale',  )
         admin.doIt( 'delete', 'role', name: 'Washer' )
         admin.doIt( 'disable', 'roleconstraint', id: 'Teller', key: 'locale',  )

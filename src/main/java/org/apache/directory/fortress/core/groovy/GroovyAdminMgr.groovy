@@ -12,6 +12,7 @@ import org.apache.directory.fortress.core.model.PermObj
 import org.apache.directory.fortress.core.model.Permission
 import org.apache.directory.fortress.core.model.Role
 import org.apache.directory.fortress.core.model.RoleConstraint
+import org.apache.directory.fortress.core.model.SDSet
 import org.apache.directory.fortress.core.model.User
 import org.apache.directory.fortress.core.model.UserRole
 import com.fasterxml.jackson.databind.DeserializationFeature
@@ -63,6 +64,8 @@ class GroovyAdminMgr
                             adminMgr.deleteUser( user )
                             break;
                         default:
+                            reason = 'Invalid USER operation'
+                            println "************  Error GroovyAdminMgr: $reason"
                             break
                     }
                     break
@@ -80,8 +83,10 @@ class GroovyAdminMgr
                         case 'DELETE':
                             println ' delete...'
                             delMgr.delete( ou )
-                            break;
+                            break
                         default:
+                            reason = 'Invalid ORGUNIT operation'
+                            println "************  Error GroovyAdminMgr: $reason"
                             break
                     }
                     break
@@ -99,8 +104,38 @@ class GroovyAdminMgr
                         case 'DELETE':
                             println ' delete...'
                             adminMgr.deleteRole( role )
-                            break;
+                            break
                         default:
+                            reason = 'Invalid ROLE operation'
+                            println "************  Error GroovyAdminMgr: $reason"
+                            break
+                    }
+                    break
+
+                case 'SDSET':
+                    AdminMgr adminMgr = AdminMgrFactory.createInstance()
+                    options.put(FQDN, SDSet.class.getName())
+                    SDSet sdset = get( options, BASE_CLASS )
+                    print "sdset: $sdset "
+                    switch ( operation.toUpperCase() )
+                    {
+                        case 'ADD':
+                            println ' add...'
+                            if( sdset.getType() == SDSet.SDType.DYNAMIC)
+                                adminMgr.createDsdSet( sdset )
+                            else
+                                adminMgr.createSsdSet( sdset )
+                            break
+                        case 'DELETE':
+                            println ' delete...'
+                        if( sdset.getType() == SDSet.SDType.DYNAMIC)
+                            adminMgr.deleteDsdSet( sdset )
+                        else
+                            adminMgr.deleteSsdSet( sdset )
+                        break
+                        default:
+                            reason = 'Invalid SDSET operation'
+                            println "************  Error GroovyAdminMgr: $reason"
                             break
                     }
                     break
@@ -139,6 +174,8 @@ class GroovyAdminMgr
                             adminMgr.removeRoleConstraint( new UserRole(options.get('userId'), constraint.id ), constraint )
                             break;
                         default:
+                            reason = 'Invalid ROLECONSTRAINT operation'
+                            println "************  Error GroovyAdminMgr: $reason"
                             break
                     }
                     break
@@ -157,8 +194,10 @@ class GroovyAdminMgr
                         case 'DELETE':
                             println ' delete...'
                             adminMgr.deassignUser( uRole )
-                            break;
+                            break
                         default:
+                            reason = 'Invalid USERROLE operation'
+                            println "************  Error GroovyAdminMgr: $reason"
                             break
                     }
                     break
@@ -177,8 +216,10 @@ class GroovyAdminMgr
                         case 'DELETE':
                             println ' delete...'
                             adminMgr.deletePermission( perm )
-                            break;
+                            break
                         default:
+                            reason = 'Invalid PERMISSION operation'
+                            println "************  Error GroovyAdminMgr: $reason"
                             break
                     }
                     break
@@ -197,8 +238,10 @@ class GroovyAdminMgr
                         case 'DELETE':
                             println ' delete...'
                             adminMgr.deletePermObj( pObj )
-                            break;
+                            break
                         default:
+                            reason = 'Invalid PERMOBJ operation'
+                            println "************  Error GroovyAdminMgr: $reason"
                             break
                     }
                     break
@@ -216,15 +259,17 @@ class GroovyAdminMgr
                         case 'DELETE':
                             println ' delete...'
                             adminMgr.revokePermission( new Permission( grant.objName, grant.opName ), new Role( grant.roleNm ) )
-                            break;
+                            break
                         default:
+                            reason = 'Invalid PERMGRANT operation'
+                            println "************  Error GroovyAdminMgr: $reason"
                             break
                     }
                     break
 
-
                 default:
-                    reason = 'Invalid operation'
+                    reason = 'Invalid entity'
+                    println "************  Error GroovyAdminMgr: $reason"
                     return false
             }
             rc = true
@@ -233,7 +278,7 @@ class GroovyAdminMgr
         catch ( e )
         {
             reason = e.toString()
-            println reason
+            println "************  Exception GroovyAdminMgr: $reason"
         }
         return rc
     }
