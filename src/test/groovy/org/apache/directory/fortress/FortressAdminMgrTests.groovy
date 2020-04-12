@@ -23,6 +23,7 @@ class FortressAdminMgrTests
     {
         GroovyAdminMgr admin = new GroovyAdminMgr()
 
+        //         Operation      Entity                Attribute Map
         admin.edit( Ids.ADD,    Ids.ORGUNIT,        name: 'Default', type: 'USER' )
         admin.edit( Ids.ADD,    Ids.ROLE,           name: Ids.WASHER)
         admin.edit( Ids.ENABLE, Ids.ROLECONSTRAINT, id: Ids.WASHER, key: 'locale' )
@@ -80,7 +81,7 @@ class FortressAdminMgrTests
     def del ( )
     {
         GroovyAdminMgr admin = new GroovyAdminMgr()
-
+        //         Operation      Entity                Attribute Map
         admin.edit( Ids.DELETE, Ids.PERMISSION, objName: 'Currency', opName: 'dry' )
         admin.edit( Ids.DELETE, Ids.PERMISSION, objName: 'Currency', opName: 'rinse' )
         admin.edit( Ids.DELETE, Ids.PERMISSION, objName: 'Currency', opName: 'soak' )
@@ -91,17 +92,17 @@ class FortressAdminMgrTests
         admin.edit( Ids.DELETE, Ids.PERMOBJ,    objName: 'Account', ou: 'Default' )
         admin.edit( Ids.DELETE, Ids.ORGUNIT,    name: 'Default', type: 'PERM' )
 
-        admin.edit( Ids.DELETE, Ids.SDSET,      type: 'DYNAMIC', name: 'Bankers' )
+        admin.edit( Ids.DELETE, Ids.SDSET,          type: 'DYNAMIC', name: 'Bankers' )
         admin.edit( Ids.DISABLE,Ids.ROLECONSTRAINT, id: Ids.WASHER, key: 'locale',  )
-        admin.edit( Ids.DELETE, Ids.ROLE,       name: Ids.WASHER)
+        admin.edit( Ids.DELETE, Ids.ROLE,           name: Ids.WASHER)
         admin.edit( Ids.DISABLE,Ids.ROLECONSTRAINT, id: Ids.TELLER, key: 'locale',  )
         admin.edit( Ids.DISABLE,Ids.ROLECONSTRAINT, id: Ids.TELLER, key: 'strength',  )
-        admin.edit( Ids.DELETE, Ids.ROLE,       name: Ids.TELLER)
+        admin.edit( Ids.DELETE, Ids.ROLE,           name: Ids.TELLER)
 
-        admin.edit( Ids.DELETE, Ids.USER, userId: 'huey' )
-        admin.edit( Ids.DELETE, Ids.USER, userId: 'dewey' )
-        admin.edit( Ids.DELETE, Ids.USER, userId: 'louie' )
-        admin.edit( Ids.DELETE, Ids.ORGUNIT, name: 'Default', type: 'USER' )
+        admin.edit( Ids.DELETE, Ids.USER,       userId: 'huey' )
+        admin.edit( Ids.DELETE, Ids.USER,       userId: 'dewey' )
+        admin.edit( Ids.DELETE, Ids.USER,       userId: 'louie' )
+        admin.edit( Ids.DELETE, Ids.ORGUNIT,    name: 'Default', type: 'USER' )
 
         //admin.end()
     }
