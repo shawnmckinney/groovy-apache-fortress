@@ -1,6 +1,7 @@
 package org.apache.directory.fortress.core.groovy
 
 import org.apache.directory.fortress.GroovyAccessMgr
+import org.apache.directory.fortress.Ids
 
 class FortressAccessMgrTests
 {
@@ -34,6 +35,8 @@ class FortressAccessMgrTests
         GroovyAccessMgr rbac = new GroovyAccessMgr()
         // if we don't load specify locale constraint, neither role will be activated:
         assert ( rbac.start ( options ) )
+        assert ( !rbac.inRole ( Ids.WASHER ) )
+        assert ( !rbac.inRole ( Ids.TELLER ) )
 
         assert !rbac.canDo("Currency", "dry")
         assert !rbac.canDo("Currency", "rinse")
@@ -52,6 +55,7 @@ class FortressAccessMgrTests
     {
         GroovyAccessMgr rbac = new GroovyAccessMgr()
         assert ( rbac.start ( options ) )
+        assert ( rbac.inRole ( Ids.WASHER ) )
 
         assert rbac.canDo("Currency", "dry")
         assert rbac.canDo("Currency", "rinse")
@@ -64,16 +68,17 @@ class FortressAccessMgrTests
         //aMgr.end()
         String userId = options.get('userId')
         String locale = options.get('locale')
-        println ( "End $userId Washer in the $locale.")
+        println ( "End $userId $Ids.WASHER in the $locale.")
     }
 
     def isTeller ( Map options=[:] )
     {
         GroovyAccessMgr rbac = new GroovyAccessMgr()
 
-        options.put( 'roles', ["washer", "teller"], )
+        options.put( 'roles', [Ids.WASHER, Ids.TELLER], )
         assert ( rbac.start ( options ) )
-        //assert ( rbac.start ( userid, locale: 'East', strength: '2fa', roles: ["washer", "teller"] ) )
+        assert ( rbac.inRole ( Ids.TELLER ) )
+        //assert ( rbac.start ( userid, locale: 'East', strength: '2fa', roles: [Ids.WASHER, Ids.TELLER] ) )
 
         assert !rbac.canDo("Currency", "dry")
         assert !rbac.canDo("Currency", "rinse")
@@ -86,7 +91,7 @@ class FortressAccessMgrTests
         //aMgr.end()
         String userId = options.get('userId')
         String locale = options.get('locale')
-        println ( "End $userId Teller in the $locale.")
+        println ( "End $userId $Ids.TELLER in the $locale.")
     }
 
     static void main (def args)
