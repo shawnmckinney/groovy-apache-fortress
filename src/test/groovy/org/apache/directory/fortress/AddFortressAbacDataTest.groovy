@@ -4,6 +4,22 @@ import org.apache.directory.fortress.GroovyAdminMgr
 
 class AddFortressAbacDataTest
 {
+
+
+    public static final String ADD = 'add'
+    public static final String ENABLE = 'enable'
+    public static final String DELETE = 'delete'
+    public static final String ORGUNIT = 'orgunit'
+    public static final String ROLE = 'role'
+    public static final String ROLECONSTRAINT = 'roleconstraint'
+    public static final String USER = 'user'
+    public static final String USERROLE = 'userrole'
+    public static final String PERMOBJ = 'permobj'
+    public static final String PERMISSION = 'permission'
+    public static final String PERMGRANT = 'permgrant'
+    public static final String WASHER = 'Washer'
+    public static final String TELLER = 'Teller'
+
     static void main (def args)
     {
         def test = new AddFortressAbacDataTest()
@@ -22,56 +38,56 @@ class AddFortressAbacDataTest
     {
         GroovyAdminMgr admin = new GroovyAdminMgr()
 
-        admin.edit( 'add', 'orgunit', name: 'Default', type: 'USER' )
-        admin.edit( 'add', 'role', name: 'Washer' )
-        admin.edit( 'enable', 'roleconstraint', id: 'Washer', key: 'locale' )
-        admin.edit( 'add', 'role', name: 'Teller' )
-        admin.edit( 'enable', 'roleconstraint', id: 'Teller', key: 'locale' )
-        admin.edit( 'enable', 'roleconstraint', id: 'Teller', key: 'strength'  )
-        admin.edit( 'add', 'sdset', type: 'DYNAMIC', name: 'Bankers', members: ["Teller", "Washer"], cardinality: '2', description: 'Ducks in a row' )
+        admin.edit(ADD, ORGUNIT, name: 'Default', type: 'USER' )
+        admin.edit(ADD, ROLE, name: WASHER)
+        admin.edit(ENABLE, ROLECONSTRAINT, id: WASHER, key: 'locale' )
+        admin.edit(ADD, ROLE, name: TELLER)
+        admin.edit(ENABLE, ROLECONSTRAINT, id: TELLER, key: 'locale' )
+        admin.edit(ENABLE, ROLECONSTRAINT, id: TELLER, key: 'strength'  )
+        admin.edit(ADD, 'sdset', type: 'DYNAMIC', name: 'Bankers', members: ["$TELLER", "$WASHER"], cardinality: '2', description: 'Ducks in a row' )
 
-        admin.edit( 'add', 'user', userId: 'huey', password: 'password', ou: 'Default', description: 'Groovy Test' )
-        admin.edit( 'add', 'userrole', userId: 'huey', name: 'Teller' )
-        admin.edit( 'add', 'roleconstraint', userId: 'huey', id: 'Teller', key: 'locale', value: 'East'  )
-        admin.edit( 'add', 'roleconstraint', userId: 'huey', id: 'Teller', key: 'strength', value: '2FA'  )
-        admin.edit( 'add', 'userrole', userId: 'huey', name: 'Washer' )
-        admin.edit( 'add', 'roleconstraint', userId: 'huey', id: 'Washer', key: 'locale', value: 'North'  )
-        admin.edit( 'add', 'roleconstraint', userId: 'huey', id: 'Washer', key: 'locale', value: 'South'  )
+        admin.edit(ADD, USER, userId: 'huey', password: 'password', ou: 'Default', description: 'Groovy Test' )
+        admin.edit(ADD, USERROLE, userId: 'huey', name: TELLER)
+        admin.edit(ADD, ROLECONSTRAINT, userId: 'huey', id: TELLER, key: 'locale', value: 'East'  )
+        admin.edit(ADD, ROLECONSTRAINT, userId: 'huey', id: TELLER, key: 'strength', value: '2FA'  )
+        admin.edit(ADD, USERROLE, userId: 'huey', name: WASHER)
+        admin.edit(ADD, ROLECONSTRAINT, userId: 'huey', id: WASHER, key: 'locale', value: 'North'  )
+        admin.edit(ADD, ROLECONSTRAINT, userId: 'huey', id: WASHER, key: 'locale', value: 'South'  )
 
-        admin.edit( 'add', 'user', userId: 'dewey', password: 'password', ou: 'Default', description: 'Groovy Test' )
-        admin.edit( 'add', 'userrole', userId: 'dewey', name: 'Teller' )
-        admin.edit( 'add', 'roleconstraint', userId: 'dewey', id: 'Teller', key: 'locale', value: 'North'  )
-        admin.edit( 'add', 'roleconstraint', userId: 'dewey', id: 'Teller', key: 'strength', value: '2FA'  )
-        admin.edit( 'add', 'userrole', userId: 'dewey', name: 'Washer' )
-        admin.edit( 'add', 'roleconstraint', userId: 'dewey', id: 'Washer', key: 'locale', value: 'East'  )
-        admin.edit( 'add', 'roleconstraint', userId: 'dewey', id: 'Washer', key: 'locale', value: 'South'  )
+        admin.edit(ADD, USER, userId: 'dewey', password: 'password', ou: 'Default', description: 'Groovy Test' )
+        admin.edit(ADD, USERROLE, userId: 'dewey', name: TELLER)
+        admin.edit(ADD, ROLECONSTRAINT, userId: 'dewey', id: TELLER, key: 'locale', value: 'North'  )
+        admin.edit(ADD, ROLECONSTRAINT, userId: 'dewey', id: TELLER, key: 'strength', value: '2FA'  )
+        admin.edit(ADD, USERROLE, userId: 'dewey', name: WASHER)
+        admin.edit(ADD, ROLECONSTRAINT, userId: 'dewey', id: WASHER, key: 'locale', value: 'East'  )
+        admin.edit(ADD, ROLECONSTRAINT, userId: 'dewey', id: WASHER, key: 'locale', value: 'South'  )
 
-        admin.edit( 'add', 'user', userId: 'louie', password: 'password', ou: 'Default', description: 'Groovy Test' )
-        admin.edit( 'add', 'userrole', userId: 'louie', name: 'Teller' )
-        admin.edit( 'add', 'roleconstraint', userId: 'louie', id: 'Teller', key: 'locale', value: 'South'  )
-        admin.edit( 'add', 'roleconstraint', userId: 'louie', id: 'Teller', key: 'strength', value: '2FA'  )
-        admin.edit( 'add', 'userrole', userId: 'louie', name: 'Washer' )
-        admin.edit( 'add', 'roleconstraint', userId: 'louie', id: 'Washer', key: 'locale', value: 'North'  )
-        admin.edit( 'add', 'roleconstraint', userId: 'louie', id: 'Washer', key: 'locale', value: 'East'  )
+        admin.edit(ADD, USER, userId: 'louie', password: 'password', ou: 'Default', description: 'Groovy Test' )
+        admin.edit(ADD, USERROLE, userId: 'louie', name: TELLER)
+        admin.edit(ADD, ROLECONSTRAINT, userId: 'louie', id: TELLER, key: 'locale', value: 'South'  )
+        admin.edit(ADD, ROLECONSTRAINT, userId: 'louie', id: TELLER, key: 'strength', value: '2FA'  )
+        admin.edit(ADD, USERROLE, userId: 'louie', name: WASHER)
+        admin.edit(ADD, ROLECONSTRAINT, userId: 'louie', id: WASHER, key: 'locale', value: 'North'  )
+        admin.edit(ADD, ROLECONSTRAINT, userId: 'louie', id: WASHER, key: 'locale', value: 'East'  )
 
-        admin.edit( 'add', 'orgunit', name: 'Default', type: 'PERM' )
-        admin.edit( 'add', 'permobj', objName: 'Currency', ou: 'Default' )
-        admin.edit( 'add', 'permission', objName: 'Currency', opName: 'dry' )
-        admin.edit( 'add', 'permission', objName: 'Currency', opName: 'rinse' )
-        admin.edit( 'add', 'permission', objName: 'Currency', opName: 'soak' )
+        admin.edit(ADD, ORGUNIT, name: 'Default', type: 'PERM' )
+        admin.edit(ADD, PERMOBJ, objName: 'Currency', ou: 'Default' )
+        admin.edit(ADD, PERMISSION, objName: 'Currency', opName: 'dry' )
+        admin.edit(ADD, PERMISSION, objName: 'Currency', opName: 'rinse' )
+        admin.edit(ADD, PERMISSION, objName: 'Currency', opName: 'soak' )
 
-        admin.edit( 'add', 'permgrant', roleNm: 'Washer', objName: 'Currency', opName: 'dry' )
-        admin.edit( 'add', 'permgrant', roleNm: 'Washer', objName: 'Currency', opName: 'rinse' )
-        admin.edit( 'add', 'permgrant', roleNm: 'Washer', objName: 'Currency', opName: 'soak' )
+        admin.edit(ADD, PERMGRANT, roleNm: WASHER, objName: 'Currency', opName: 'dry' )
+        admin.edit(ADD, PERMGRANT, roleNm: WASHER, objName: 'Currency', opName: 'rinse' )
+        admin.edit(ADD, PERMGRANT, roleNm: WASHER, objName: 'Currency', opName: 'soak' )
 
-        admin.edit( 'add', 'permobj', objName: 'Account', ou: 'Default' )
-        admin.edit( 'add', 'permission', objName: 'Account', opName: 'deposit' )
-        admin.edit( 'add', 'permission', objName: 'Account', opName: 'inquiry' )
-        admin.edit( 'add', 'permission', objName: 'Account', opName: 'withdrawal' )
+        admin.edit(ADD, PERMOBJ, objName: 'Account', ou: 'Default' )
+        admin.edit(ADD, PERMISSION, objName: 'Account', opName: 'deposit' )
+        admin.edit(ADD, PERMISSION, objName: 'Account', opName: 'inquiry' )
+        admin.edit(ADD, PERMISSION, objName: 'Account', opName: 'withdrawal' )
 
-        admin.edit( 'add', 'permgrant', roleNm: 'Teller', objName: 'Account', opName: 'deposit' )
-        admin.edit( 'add', 'permgrant', roleNm: 'Teller', objName: 'Account', opName: 'inquiry' )
-        admin.edit( 'add', 'permgrant', roleNm: 'Teller', objName: 'Account', opName: 'withdrawal' )
+        admin.edit(ADD, PERMGRANT, roleNm: TELLER, objName: 'Account', opName: 'deposit' )
+        admin.edit(ADD, PERMGRANT, roleNm: TELLER, objName: 'Account', opName: 'inquiry' )
+        admin.edit(ADD, PERMGRANT, roleNm: TELLER, objName: 'Account', opName: 'withdrawal' )
 
         //admin.end()
     }
@@ -80,27 +96,27 @@ class AddFortressAbacDataTest
     {
         GroovyAdminMgr admin = new GroovyAdminMgr()
 
-        admin.edit( 'delete', 'permission', objName: 'Currency', opName: 'dry' )
-        admin.edit( 'delete', 'permission', objName: 'Currency', opName: 'rinse' )
-        admin.edit( 'delete', 'permission', objName: 'Currency', opName: 'soak' )
-        admin.edit( 'delete', 'permobj', objName: 'Currency', ou: 'Default' )
-        admin.edit( 'delete', 'permission', objName: 'Account', opName: 'deposit' )
-        admin.edit( 'delete', 'permission', objName: 'Account', opName: 'inquiry' )
-        admin.edit( 'delete', 'permission', objName: 'Account', opName: 'withdrawal' )
-        admin.edit( 'delete', 'permobj', objName: 'Account', ou: 'Default' )
-        admin.edit( 'delete', 'orgunit', name: 'Default', type: 'PERM' )
+        admin.edit(DELETE, PERMISSION, objName: 'Currency', opName: 'dry' )
+        admin.edit(DELETE, PERMISSION, objName: 'Currency', opName: 'rinse' )
+        admin.edit(DELETE, PERMISSION, objName: 'Currency', opName: 'soak' )
+        admin.edit(DELETE, PERMOBJ, objName: 'Currency', ou: 'Default' )
+        admin.edit(DELETE, PERMISSION, objName: 'Account', opName: 'deposit' )
+        admin.edit(DELETE, PERMISSION, objName: 'Account', opName: 'inquiry' )
+        admin.edit(DELETE, PERMISSION, objName: 'Account', opName: 'withdrawal' )
+        admin.edit(DELETE, PERMOBJ, objName: 'Account', ou: 'Default' )
+        admin.edit(DELETE, ORGUNIT, name: 'Default', type: 'PERM' )
 
-        admin.edit( 'delete', 'sdset', type: 'DYNAMIC', name: 'Bankers' )
-        admin.edit( 'disable', 'roleconstraint', id: 'Washer', key: 'locale',  )
-        admin.edit( 'delete', 'role', name: 'Washer' )
-        admin.edit( 'disable', 'roleconstraint', id: 'Teller', key: 'locale',  )
-        admin.edit( 'disable', 'roleconstraint', id: 'Teller', key: 'strength',  )
-        admin.edit( 'delete', 'role', name: 'Teller' )
+        admin.edit(DELETE, 'sdset', type: 'DYNAMIC', name: 'Bankers' )
+        admin.edit( 'disable', ROLECONSTRAINT, id: WASHER, key: 'locale',  )
+        admin.edit(DELETE, ROLE, name: WASHER)
+        admin.edit( 'disable', ROLECONSTRAINT, id: TELLER, key: 'locale',  )
+        admin.edit( 'disable', ROLECONSTRAINT, id: TELLER, key: 'strength',  )
+        admin.edit(DELETE, ROLE, name: TELLER)
 
-        admin.edit( 'delete', 'user', userId: 'huey' )
-        admin.edit( 'delete', 'user', userId: 'dewey' )
-        admin.edit( 'delete', 'user', userId: 'louie' )
-        admin.edit( 'delete', 'orgunit', name: 'Default', type: 'USER' )
+        admin.edit(DELETE, USER, userId: 'huey' )
+        admin.edit(DELETE, USER, userId: 'dewey' )
+        admin.edit(DELETE, USER, userId: 'louie' )
+        admin.edit(DELETE, ORGUNIT, name: 'Default', type: 'USER' )
 
         //admin.end()
     }
