@@ -1,23 +1,129 @@
 # a_groovy_apache_fortress
 A groovy wrapper for Apache Fortress
 
+## Overview
+
+This sample uses Apache Groovy to wrap Fortress APIs.  It provides a deep dive into advanced RBAC use cases showing a novel way of invoking its APIs.
+It is not a basic tutorial on how RBAC works.  There are other places for that, starting with the Apache Fortress project page.
+
+## How it works
+
+Basically there are a couple of test modules created one for adding the RBAC policy, the other for verifying it.  
+Each test module uses a Groovy wrapper to do its work.
+
+1. FortressAdminMgrTests -> GroovyAdminMgr -> Apache Fortress AdminMgr (insert policy)
+2. FortressAccessMgrTests -> GroovyAccessMgr -> Apache Fortress AccessMgr (verify policy)
+
+## More about the test cases
+
+Using Apache Fortress ABAC which places dynamic constraints on roles.  The idea is limiting when they can be activated.  
+For more on this concept checkout these blog posts:
+
+ * [Towards an Attribute-Based Role-Based Access Control System](https://iamfortress.net/2018/07/07/towards-an-attribute-based-role-based-access-control-system/)
+ * [Adding Contextual Information to the RBAC Decision](https://symas.com/adding-contextual-information-to-the-rbac-decision/)
+ * [Designing an Authorization System: a Dialogue in Five Scenes](https://iamfortress.net/2019/11/23/designing-an-authorization-system-a-dialogue-in-five-scenes/)
+
+## Why Groovy?
+
+Apache Groovy is a dynamic language that runs on top of the java virtual machine. It simplifies syntax, allowing test cases to more easily emerge from the boilerplate.
+
+We can iterate through a bunch of scenarios really fast.  
+
+## How do I run the test cases?
+
+They can run from within a particular Java IDE, like Netbeans, Eclipse or Intellij. Alternatively, they can be run from the command line.
+
+## What else do I need?
+
+An operational Apache Fortress runtime using one of its supported backends, either OpenLDAP or Apache Directory.
+
+For example, checkout the quickstarts:
+ * [README-QUICKSTART-APACHEDS](https://github.com/apache/directory-fortress-core/blob/master/README-QUICKSTART-APACHEDS.md)
+ * [README-QUICKSTART-SLAPD](https://github.com/apache/directory-fortress-core/blob/master/README-QUICKSTART-SLAPD.md)
+ * [README-QUICKSTART-DOCKER-APACHEDS](https://github.com/apache/directory-fortress-core/blob/master/README-QUICKSTART-DOCKER-APACHEDS.md)
+ * [README-QUICKSTART-DOCKER-SLAPD](https://github.com/apache/directory-fortress-core/blob/master/README-QUICKSTART-DOCKER-SLAPD.md)
+ 
 ## Fortress Config w/ System Properties:
 
-Add to runtime: ```-Dfortress.admin.user=cn=Manager,dc=example,dc=com -Dfortress.admin.pw=secret -Dfortress.config.root=ou=Config,dc=example,dc=com```
+Fortress config can be bootstrapped in one of two ways:
 
-Note: Fortress config can be set using system properties containing coordinates to node in ldap.
+1. System Env
 
-## Setting Up Config Directory
+Add to runtime parameters to backend: ```-Dfortress.admin.user=cn=Manager,dc=example,dc=com -Dfortress.admin.pw=secret -Dfortress.config.root=ou=Config,dc=example,dc=com```
 
-Add to runtime classpath:  ```src/test/resources``` which contains the config files for fortress (if not set via sys props), ehcache and log4j.
+2. Config File
 
-## Running tests
+Modify parameters in the [fortress.properties](src/test/resources/fortress.properties) file.
+
+## Setting Up Config Directory in IDE
+
+Be sure to add to the system properties to the runtime classpath of the ide:  ```src/test/resources``` which contains the config files for fortress (if not set via sys props), ehcache and log4j.
+
+Or, add the to the runtime config of the ide as in the System env above.
+
+## Building the sample
+
+```mvn clean install```
+
+## Running tests from command line
+
+Use the uber jar from the build, located under target folder.
 
 ```
 java -classpath target/fortress-core-groovy-0.0.1-SNAPSHOT-jar-with-dependencies.jar:src/test/resources/ org.apache.directory.fortress.core.groovy.FortressAdminMgrTests
 ```
 
 ## Understand the security policy
+
+If you read the 'toward an attribute-based' article listed above, this is a similar use case.  Instead of stooges, curly, moe, larry
+we have ducks, huey, dewey and louie.  Again centered around a banking scenario.  The ducks can be either a Teller or Washer but 
+are limited in which branches this may occur in.
+
+An additional constraint has been placed on the 'Teller' role.  That is not only is 'locale' verified, now we must also verify the 'strength'
+of the authentication.  The idea, we want to be sure Tellers have been strongly authenticated.  Washers perhaps not as sensitive of operation will only require valid locale.
+
+For example, here are Huey's role assignments:
+
+| Role Name  | Constraint  | Value    |
+| ---------- | ----------- | -------- |
+| teller     | locale      | east     |
+| teller     | strength    | 2fa      |
+| washer     | locale      | north    |
+| washer     | locale      | south    |
+
+Huey has two roles assigned, teller and washer.  The washer role is constrained by location.  Huey may be a washer in the north and south.
+But, thet teller role has two constraints placed upon it, locale and strength (of authN).  This means Huey may only be a teller at branches
+that are in the east AND where he logged on via a two-factory authentication verification.  If either are missing, that role will not activate.
+
+Here is the raw data for Huey's assignments.  This is how they are stored on Huey's record in the database:
+
+```
+teller$type$USER$locale$East$
+teller$type$USER$strength$2FA$
+washer$type$USER$locale$North$
+washer$type$USER$locale$South$  
+```
+Here are Dewey's role assignments:
+
+| Role Name  | Constraint  | Value    |
+| ---------- | ----------- | -------- |
+| teller     | locale      | north    |
+| teller     | strength    | 2fa      |
+| washer     | locale      | east     |
+| washer     | locale      | south    |
+
+Dewey can be a teller in the north, if strongly authenticated.  And a washer in the east and south.
+
+Louie's assignments:
+
+| Role Name  | Constraint  | Value    |
+| ---------- | ----------- | -------- |
+| teller     | locale      | south    |
+| teller     | strength    | 2fa      |
+| washer     | locale      | east     |
+| washer     | locale      | north    |
+
+Louis can be a teller in the south, if strongly authenticated.  And a washer in the east and north.
 
 #### 1. User-to-Role Assignment Table
 
