@@ -2,7 +2,7 @@ package org.apache.directory.fortress.core.groovy
 
 import org.apache.directory.fortress.GroovyAccessMgr
 
-class GroovyApacheFortressTest
+class FortressAccessMgrTests
 {
     def abacConstraints()
     {
@@ -88,7 +88,7 @@ class GroovyApacheFortressTest
 
     static void main (def args)
     {
-        def test = new GroovyApacheFortressTest()
+        def test = new FortressAccessMgrTests()
         test.abacConstraints()
         System.exit( 0 );
     }

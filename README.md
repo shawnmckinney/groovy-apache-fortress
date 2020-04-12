@@ -14,7 +14,7 @@ Add to runtime classpath:  ```src/test/resources``` which contains the config fi
 ## Running tests
 
 ```
-java -classpath target/fortress-core-groovy-0.0.1-SNAPSHOT-jar-with-dependencies.jar:src/test/resources/ org.apache.directory.fortress.core.groovy.AddFortressAbacDataTest
+java -classpath target/fortress-core-groovy-0.0.1-SNAPSHOT-jar-with-dependencies.jar:src/test/resources/ org.apache.directory.fortress.core.groovy.FortressAdminMgrTests
 ```
 
 

@@ -104,7 +104,7 @@
                     <!-- MainClass in mainfest make a executable jar -->
                     <archive>
                         <manifest>
-                            <mainClass>org.apache.directory.fortress.core.groovy.AddFortressAbacDataTest</mainClass>
+                            <mainClass>org.apache.directory.fortress.core.groovy.FortressAdminMgrTests</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

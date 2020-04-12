@@ -2,7 +2,7 @@ package org.apache.directory.fortress.core.groovy
 
 import org.apache.directory.fortress.GroovyAdminMgr
 
-class AddFortressAbacDataTest
+class FortressAdminMgrTests
 {
 
 
@@ -23,7 +23,7 @@ class AddFortressAbacDataTest
 
     static void main (def args)
     {
-        def test = new AddFortressAbacDataTest()
+        def test = new FortressAdminMgrTests()
         test.begin()
         System.exit( 0 );
     }
