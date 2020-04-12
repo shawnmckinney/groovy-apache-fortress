@@ -1,12 +1,9 @@
 package org.apache.directory.fortress.core.groovy
 
-import org.apache.directory.fortress.GroovyAccessMgr
 import org.apache.directory.fortress.GroovyAdminMgr
 
 class AddFortressAbacDataTest
 {
-    GroovyAccessMgr aMgr = new GroovyAccessMgr()
-
     def begin()
     {
         // These should all pass...
@@ -70,7 +67,7 @@ class AddFortressAbacDataTest
         admin.edit( 'add', 'permgrant', roleNm: 'Teller', objName: 'Account', opName: 'inquiry' )
         admin.edit( 'add', 'permgrant', roleNm: 'Teller', objName: 'Account', opName: 'withdrawal' )
 
-        aMgr.end()
+        //admin.end()
     }
 
     def del ( )
@@ -99,7 +96,7 @@ class AddFortressAbacDataTest
         admin.edit( 'delete', 'user', userId: 'louie' )
         admin.edit( 'delete', 'orgunit', name: 'Default', type: 'USER' )
 
-        aMgr.end()
+        //admin.end()
     }
 
     static void main (def args)
