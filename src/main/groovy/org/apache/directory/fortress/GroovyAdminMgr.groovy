@@ -60,7 +60,7 @@ class GroovyAdminMgr
                         case 'DELETE':
                             println ' delete...'
                             adminMgr.deleteUser( user )
-                            break;
+                            break
                         default:
                             reason = 'Invalid USER operation'
                             println "***  Error GroovyAdminMgr: $reason"
@@ -158,7 +158,7 @@ class GroovyAdminMgr
                             println ' delete...'
                             constraint.setType( RoleConstraint.RCType.USER )
                             adminMgr.disableRoleConstraint( new Role(constraint.getId()), constraint )
-                            break;
+                            break
                         case 'ADD':
                             RoleConstraint constraint = get( options, BASE_CLASS, true )
                             print "roleconstraint: $constraint "
@@ -172,7 +172,7 @@ class GroovyAdminMgr
                             println ' delete...'
                             constraint.setType( RoleConstraint.RCType.USER )
                             adminMgr.removeRoleConstraint( new UserRole(options.get('userId'), constraint.id ), constraint )
-                            break;
+                            break
                         default:
                             reason = 'Invalid ROLECONSTRAINT operation'
                             println "***  Error GroovyAdminMgr: $reason"
