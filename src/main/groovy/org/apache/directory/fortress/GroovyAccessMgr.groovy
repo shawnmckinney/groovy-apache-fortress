@@ -81,7 +81,6 @@ class GroovyAccessMgr
         reason = null
     }
 
-
     boolean canDo ( String object, String operation, String objId = null )
     {
         boolean rc = false
@@ -100,6 +99,27 @@ class GroovyAccessMgr
             catch ( e )
             {
                 reason = e.toString()
+            }
+        }
+        else
+        {
+            reason = 'session is null'
+        }
+        return rc
+    }
+
+    boolean inRole ( String roleNm )
+    {
+        boolean rc = false
+        if ( session != null )
+        {
+            for( String name: session.getRoles() )
+            {
+                if( name.equalsIgnoreCase( roleNm ) )
+                {
+                    rc = true
+                    break
+                }
             }
         }
         else
