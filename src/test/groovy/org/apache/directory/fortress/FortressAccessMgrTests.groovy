@@ -12,18 +12,21 @@ class FortressAccessMgrTests
         isWasher ( userId: 'Huey', password: 'password', locale: 'North')
         isWasher ( userId: 'Huey', password: 'password', locale: 'South')
         isTeller ( userId: 'Huey', password: 'password', locale: 'East', strength: '2fa', roles: ["washer", "teller"])
+        isNeither ( userId: 'Huey', password: 'password', locale: 'East')
 
         println( 'Test Dewey:')
         isNeither ( userId: 'Dewey', password: 'password')
         isWasher ( userId: 'Dewey', password: 'password', locale:'East')
         isWasher ( userId: 'Dewey', password: 'password', locale:'South')
         isTeller ( userId: 'Dewey', password: 'password', locale: 'North', strength: '2fa')
+        isNeither ( userId: 'Dewey', password: 'password', locale: 'North')
 
         println( 'Test Louie:')
         isNeither ( userId: 'Louie' )
         isWasher ( userId: 'Louie', locale: 'North')
         isWasher ( userId: 'Louie', locale: 'East')
         isTeller ( userId: 'Louie', locale: 'South', strength: '2fa')
+        isNeither ( userId: 'Louie', locale: 'South' )
     }
 
     def isNeither ( Map options=[:] )
