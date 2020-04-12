@@ -4,35 +4,33 @@ import org.apache.directory.fortress.GroovyAccessMgr
 
 class GroovyApacheFortressTest
 {
-    //GroovyAccessMgr aMgr = new GroovyAccessMgr()
-
     def abacConstraints()
     {
         // These should all pass...
         println( 'Test Huey:')
-        isNeither ( 'Huey', 'password')
-        isWasher ( 'Huey', 'password', 'North')
-        isWasher ( 'Huey', 'password', 'South')
-        isTeller ( 'Huey', 'password', locale: 'East', strength: '2fa', roles: ["washer", "teller"])
+        isNeither ( userId: 'Huey', password: 'password')
+        isWasher ( userId: 'Huey', password: 'password', locale: 'North')
+        isWasher ( userId: 'Huey', password: 'password', locale: 'South')
+        isTeller ( userId: 'Huey', password: 'password', locale: 'East', strength: '2fa', roles: ["washer", "teller"])
 
         println( 'Test Dewey:')
-        isNeither ( 'Dewey', 'password')
-        isWasher ( 'Dewey', 'password', 'East')
-        isWasher ( 'Dewey', 'password', 'South')
-        isTeller ( 'Dewey', 'password', locale: 'North', strength: '2fa')
+        isNeither ( userId: 'Dewey', password: 'password')
+        isWasher ( userId: 'Dewey', password: 'password', locale:'East')
+        isWasher ( userId: 'Dewey', password: 'password', locale:'South')
+        isTeller ( userId: 'Dewey', password: 'password', locale: 'North', strength: '2fa')
 
         println( 'Test Louie:')
-        isNeither ( 'Louie', null)
-        isWasher ( 'Louie', null, 'North')
-        isWasher ( 'Louie', null, 'East')
-        isTeller ( 'Louie', null, locale: 'South', strength: '2fa')
+        isNeither ( userId: 'Louie' )
+        isWasher ( userId: 'Louie', locale: 'North')
+        isWasher ( userId: 'Louie', locale: 'East')
+        isTeller ( userId: 'Louie', locale: 'South', strength: '2fa')
     }
 
-    def isNeither ( String userid, String password )
+    def isNeither ( Map options=[:] )
     {
         GroovyAccessMgr rbac = new GroovyAccessMgr()
         // if we don't load specify locale constraint, neither role will be activated:
-        assert ( rbac.start ( userid, roles: ["washer", "teller"] ) )
+        assert ( rbac.start ( options ) )
 
         assert !rbac.canDo("Currency", "dry")
         assert !rbac.canDo("Currency", "rinse")
@@ -43,14 +41,14 @@ class GroovyApacheFortressTest
         assert !rbac.canDo("Account", "withdrawal")
 
         //aMgr.end()
-
-        println ( "End $userid Neither.")
+        String userId = options.get('userId')
+        println ( "End $userId Neither.")
     }
 
-    def isWasher ( String userid, String password, String value )
+    def isWasher ( Map options=[:] )
     {
         GroovyAccessMgr rbac = new GroovyAccessMgr()
-        assert ( rbac.start ( userid, locale: value, roles: ["washer", "teller"] ) )
+        assert ( rbac.start ( options ) )
 
         assert rbac.canDo("Currency", "dry")
         assert rbac.canDo("Currency", "rinse")
@@ -61,16 +59,17 @@ class GroovyApacheFortressTest
         assert !rbac.canDo("Account", "withdrawal")
 
         //aMgr.end()
-
-        println ( "End $userid Washer in the $value.")
+        String userId = options.get('userId')
+        String locale = options.get('locale')
+        println ( "End $userId Washer in the $locale.")
     }
 
-    def isTeller ( Map options=[:], String userid, String password=null )
+    def isTeller ( Map options=[:] )
     {
         GroovyAccessMgr rbac = new GroovyAccessMgr()
 
         options.put( 'roles', ["washer", "teller"], )
-        assert ( rbac.start ( options, userid ) )
+        assert ( rbac.start ( options ) )
         //assert ( rbac.start ( userid, locale: 'East', strength: '2fa', roles: ["washer", "teller"] ) )
 
         assert !rbac.canDo("Currency", "dry")
@@ -82,9 +81,9 @@ class GroovyApacheFortressTest
         assert rbac.canDo( "Account", "withdrawal")
 
         //aMgr.end()
-
-        String value = options.get('locale')
-        println ( "End $userid Teller in the $value.")
+        String userId = options.get('userId')
+        String locale = options.get('locale')
+        println ( "End $userId Teller in the $locale.")
     }
 
     static void main (def args)

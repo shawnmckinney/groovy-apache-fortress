@@ -18,10 +18,11 @@ class GroovyAccessMgr
         reason = null
     }
 
-    boolean start( Map options=[:], String userId, String password=null )
+    boolean start( Map options=[:] )
     {
         boolean rc = false
         initialize()
+        String userId, password=null
         println "start-> userId:$userId password:$password constraints:$options"
         List<RoleConstraint> constraints;
         String[] roles;
@@ -31,11 +32,18 @@ class GroovyAccessMgr
             {
                 roles = entry.value
             }
+            else if ( entry.key == 'userId')
+            {
+                userId = entry.value
+            }
+            else if ( entry.key == 'password')
+            {
+                password = entry.value
+            }
             else
             {
                 if( constraints == null)
                     constraints = new ArrayList();
-
                 RoleConstraint constraint = new RoleConstraint()
                 constraint.setKey( entry.key )
                 constraint.setValue( entry.value )
@@ -43,7 +51,6 @@ class GroovyAccessMgr
                 println "Key: $entry.key Value: $entry.value"
             }
         }
-
         try
         {
             AccessMgr accessMgr = AccessMgrFactory.createInstance()
