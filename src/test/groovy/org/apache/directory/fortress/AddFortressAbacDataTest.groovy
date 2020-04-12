@@ -19,6 +19,7 @@ class AddFortressAbacDataTest
     public static final String PERMGRANT = 'permgrant'
     public static final String WASHER = 'Washer'
     public static final String TELLER = 'Teller'
+    public static final String SDSET = 'sdset'
 
     static void main (def args)
     {
@@ -44,7 +45,7 @@ class AddFortressAbacDataTest
         admin.edit(ADD, ROLE, name: TELLER)
         admin.edit(ENABLE, ROLECONSTRAINT, id: TELLER, key: 'locale' )
         admin.edit(ENABLE, ROLECONSTRAINT, id: TELLER, key: 'strength'  )
-        admin.edit(ADD, 'sdset', type: 'DYNAMIC', name: 'Bankers', members: ["$TELLER", "$WASHER"], cardinality: '2', description: 'Ducks in a row' )
+        admin.edit(ADD, SDSET, type: 'DYNAMIC', name: 'Bankers', members: ["$TELLER", "$WASHER"], cardinality: '2', description: 'Ducks in a row' )
 
         admin.edit(ADD, USER, userId: 'huey', password: 'password', ou: 'Default', description: 'Groovy Test' )
         admin.edit(ADD, USERROLE, userId: 'huey', name: TELLER)
@@ -106,7 +107,7 @@ class AddFortressAbacDataTest
         admin.edit(DELETE, PERMOBJ, objName: 'Account', ou: 'Default' )
         admin.edit(DELETE, ORGUNIT, name: 'Default', type: 'PERM' )
 
-        admin.edit(DELETE, 'sdset', type: 'DYNAMIC', name: 'Bankers' )
+        admin.edit(DELETE, SDSET, type: 'DYNAMIC', name: 'Bankers' )
         admin.edit( 'disable', ROLECONSTRAINT, id: WASHER, key: 'locale',  )
         admin.edit(DELETE, ROLE, name: WASHER)
         admin.edit( 'disable', ROLECONSTRAINT, id: TELLER, key: 'locale',  )
