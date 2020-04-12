@@ -4,10 +4,16 @@ import org.apache.directory.fortress.GroovyAdminMgr
 
 class AddFortressAbacDataTest
 {
+    static void main (def args)
+    {
+        def test = new AddFortressAbacDataTest()
+        test.begin()
+        System.exit( 0 );
+    }
+
     def begin()
     {
-        // These should all pass...
-        println( 'Getting the ducks in a row...')
+        println( 'Get them ducks in a row.')
         del ( )
         add ( )
     }
@@ -97,12 +103,5 @@ class AddFortressAbacDataTest
         admin.edit( 'delete', 'orgunit', name: 'Default', type: 'USER' )
 
         //admin.end()
-    }
-
-    static void main (def args)
-    {
-        def test = new AddFortressAbacDataTest()
-        test.begin()
-        System.exit( 0 );
     }
 }
