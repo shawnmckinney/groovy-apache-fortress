@@ -104,10 +104,10 @@ For example, here are Huey's role assignments:
 | washer     | locale      | south    |
 
 Huey has two roles assigned, teller and washer.  The washer role is constrained by location.  Huey may be a washer in the north and south.
-But, thet teller role has two constraints placed upon it, locale and strength (of authN).  This means Huey may only be a teller at branches
-that are in the east AND where he logged on via a two-factory authentication verification.  If either are missing, that role will not activate.
+But, the teller role has two constraints placed upon it, locale and strength (of authN).  This means Huey may only be a teller at branches
+that are in the east AND where he logged on via a two-factor authentication mechanism.  If either are missing, that role will not activate.
 
-Here is the raw data for Huey's assignments.  This is how they are stored on Huey's record in the database:
+Here's the raw data for Huey's assignments.  This is how its stored on Huey's account in the database:
 
 ```
 teller$type$USER$locale$East$
