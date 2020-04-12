@@ -23,6 +23,7 @@ class FortressAdminMgrTests
     {
         GroovyAdminMgr admin = new GroovyAdminMgr()
 
+        // Use String constants for operation and entity names for readability.  Of course we could've used them for the actual values too.
         //         Operation      Entity                Attribute Map
         admin.edit( Ids.ADD,    Ids.ORGUNIT,        name: 'Default', type: 'USER' )
         admin.edit( Ids.ADD,    Ids.ROLE,           name: Ids.WASHER)
@@ -30,7 +31,7 @@ class FortressAdminMgrTests
         admin.edit( Ids.ADD,    Ids.ROLE,           name: Ids.TELLER)
         admin.edit( Ids.ENABLE, Ids.ROLECONSTRAINT, id: Ids.TELLER, key: 'locale' )
         admin.edit( Ids.ENABLE, Ids.ROLECONSTRAINT, id: Ids.TELLER, key: 'strength'  )
-        admin.edit( Ids.ADD,    Ids.SDSET,          type: 'DYNAMIC', name: 'Bankers', members: ["$Ids.TELLER", "$Ids.WASHER"], cardinality: '2', description: 'Ducks in a row' )
+        admin.edit( Ids.ADD,    Ids.SDSET,          type: 'DYNAMIC', name: 'Bankers', members: [Ids.TELLER, Ids.WASHER], cardinality: '2', description: 'Ducks in a row' )
 
         admin.edit( Ids.ADD, Ids.USER,              userId: 'huey', password: 'password', ou: 'Default', description: 'Groovy Test' )
         admin.edit( Ids.ADD, Ids.USERROLE,          userId: 'huey', name: Ids.TELLER)
@@ -57,23 +58,23 @@ class FortressAdminMgrTests
         admin.edit( Ids.ADD, Ids.ROLECONSTRAINT,    userId: 'louie', id: Ids.WASHER, key: 'locale', value: 'East'  )
 
         admin.edit( Ids.ADD, Ids.ORGUNIT,           name: 'Default', type: 'PERM' )
-        admin.edit( Ids.ADD, Ids.PERMOBJ,           objName: 'Currency', ou: 'Default' )
-        admin.edit( Ids.ADD, Ids.PERMISSION,        objName: 'Currency', opName: 'dry' )
-        admin.edit( Ids.ADD, Ids.PERMISSION,        objName: 'Currency', opName: 'rinse' )
-        admin.edit( Ids.ADD, Ids.PERMISSION,        objName: 'Currency', opName: 'soak' )
+        admin.edit( Ids.ADD, Ids.PERMOBJ,           objName: 'MONEY', ou: 'Default' )
+        admin.edit( Ids.ADD, Ids.PERMISSION,        objName: 'MONEY', opName: 'dry' )
+        admin.edit( Ids.ADD, Ids.PERMISSION,        objName: 'MONEY', opName: 'rinse' )
+        admin.edit( Ids.ADD, Ids.PERMISSION,        objName: 'MONEY', opName: 'soak' )
 
-        admin.edit( Ids.ADD, Ids.PERMGRANT,         roleNm: Ids.WASHER, objName: 'Currency', opName: 'dry' )
-        admin.edit( Ids.ADD, Ids.PERMGRANT,         roleNm: Ids.WASHER, objName: 'Currency', opName: 'rinse' )
-        admin.edit( Ids.ADD, Ids.PERMGRANT,         roleNm: Ids.WASHER, objName: 'Currency', opName: 'soak' )
+        admin.edit( Ids.ADD, Ids.PERMGRANT,         roleNm: Ids.WASHER, objName: 'MONEY', opName: 'dry' )
+        admin.edit( Ids.ADD, Ids.PERMGRANT,         roleNm: Ids.WASHER, objName: 'MONEY', opName: 'rinse' )
+        admin.edit( Ids.ADD, Ids.PERMGRANT,         roleNm: Ids.WASHER, objName: 'MONEY', opName: 'soak' )
 
-        admin.edit( Ids.ADD, Ids.PERMOBJ,           objName: 'Account', ou: 'Default' )
-        admin.edit( Ids.ADD, Ids.PERMISSION,        objName: 'Account', opName: 'deposit' )
-        admin.edit( Ids.ADD, Ids.PERMISSION,        objName: 'Account', opName: 'inquiry' )
-        admin.edit( Ids.ADD, Ids.PERMISSION,        objName: 'Account', opName: 'withdrawal' )
+        admin.edit( Ids.ADD, Ids.PERMOBJ,           objName: 'ACCT', ou: 'Default' )
+        admin.edit( Ids.ADD, Ids.PERMISSION,        objName: 'ACCT', opName: 'deposit' )
+        admin.edit( Ids.ADD, Ids.PERMISSION,        objName: 'ACCT', opName: 'inquiry' )
+        admin.edit( Ids.ADD, Ids.PERMISSION,        objName: 'ACCT', opName: 'withdrawal' )
 
-        admin.edit( Ids.ADD, Ids.PERMGRANT,         roleNm: Ids.TELLER, objName: 'Account', opName: 'deposit' )
-        admin.edit( Ids.ADD, Ids.PERMGRANT,         roleNm: Ids.TELLER, objName: 'Account', opName: 'inquiry' )
-        admin.edit( Ids.ADD, Ids.PERMGRANT,         roleNm: Ids.TELLER, objName: 'Account', opName: 'withdrawal' )
+        admin.edit( Ids.ADD, Ids.PERMGRANT,         roleNm: Ids.TELLER, objName: 'ACCT', opName: 'deposit' )
+        admin.edit( Ids.ADD, Ids.PERMGRANT,         roleNm: Ids.TELLER, objName: 'ACCT', opName: 'inquiry' )
+        admin.edit( Ids.ADD, Ids.PERMGRANT,         roleNm: Ids.TELLER, objName: 'ACCT', opName: 'withdrawal' )
 
         //admin.end()
     }
@@ -82,14 +83,14 @@ class FortressAdminMgrTests
     {
         GroovyAdminMgr admin = new GroovyAdminMgr()
         //         Operation      Entity                Attribute Map
-        admin.edit( Ids.DELETE, Ids.PERMISSION, objName: 'Currency', opName: 'dry' )
-        admin.edit( Ids.DELETE, Ids.PERMISSION, objName: 'Currency', opName: 'rinse' )
-        admin.edit( Ids.DELETE, Ids.PERMISSION, objName: 'Currency', opName: 'soak' )
-        admin.edit( Ids.DELETE, Ids.PERMOBJ,    objName: 'Currency', ou: 'Default' )
-        admin.edit( Ids.DELETE, Ids.PERMISSION, objName: 'Account', opName: 'deposit' )
-        admin.edit( Ids.DELETE, Ids.PERMISSION, objName: 'Account', opName: 'inquiry' )
-        admin.edit( Ids.DELETE, Ids.PERMISSION, objName: 'Account', opName: 'withdrawal' )
-        admin.edit( Ids.DELETE, Ids.PERMOBJ,    objName: 'Account', ou: 'Default' )
+        admin.edit( Ids.DELETE, Ids.PERMISSION, objName: 'MONEY', opName: 'dry' )
+        admin.edit( Ids.DELETE, Ids.PERMISSION, objName: 'MONEY', opName: 'rinse' )
+        admin.edit( Ids.DELETE, Ids.PERMISSION, objName: 'MONEY', opName: 'soak' )
+        admin.edit( Ids.DELETE, Ids.PERMOBJ,    objName: 'MONEY', ou: 'Default' )
+        admin.edit( Ids.DELETE, Ids.PERMISSION, objName: 'ACCT', opName: 'deposit' )
+        admin.edit( Ids.DELETE, Ids.PERMISSION, objName: 'ACCT', opName: 'inquiry' )
+        admin.edit( Ids.DELETE, Ids.PERMISSION, objName: 'ACCT', opName: 'withdrawal' )
+        admin.edit( Ids.DELETE, Ids.PERMOBJ,    objName: 'ACCT', ou: 'Default' )
         admin.edit( Ids.DELETE, Ids.ORGUNIT,    name: 'Default', type: 'PERM' )
 
         admin.edit( Ids.DELETE, Ids.SDSET,          type: 'DYNAMIC', name: 'Bankers' )

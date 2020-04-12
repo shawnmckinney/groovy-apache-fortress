@@ -12,7 +12,7 @@ class FortressAccessMgrTests
         isNeither ( userId: 'Huey', password: 'password')
         isWasher ( userId: 'Huey', password: 'password', locale: 'North')
         isWasher ( userId: 'Huey', password: 'password', locale: 'South')
-        isTeller ( userId: 'Huey', password: 'password', locale: 'East', strength: '2fa', roles: ["washer", "teller"])
+        isTeller ( userId: 'Huey', password: 'password', locale: 'East', strength: '2fa', roles: [Ids.WASHER, Ids.TELLER])
         isNeither ( userId: 'Huey', password: 'password', locale: 'East')
 
         println( 'Test Dewey:')
@@ -38,13 +38,13 @@ class FortressAccessMgrTests
         assert ( !rbac.inRole ( Ids.WASHER ) )
         assert ( !rbac.inRole ( Ids.TELLER ) )
 
-        assert !rbac.canDo("Currency", "dry")
-        assert !rbac.canDo("Currency", "rinse")
-        assert !rbac.canDo("Currency", "soak")
+        assert !rbac.canDo('MONEY', "dry")
+        assert !rbac.canDo('MONEY', "rinse")
+        assert !rbac.canDo('MONEY', "soak")
 
-        assert !rbac.canDo("Account", "deposit")
-        assert !rbac.canDo("Account", "inquiry")
-        assert !rbac.canDo("Account", "withdrawal")
+        assert !rbac.canDo('ACCT', "deposit")
+        assert !rbac.canDo('ACCT', "inquiry")
+        assert !rbac.canDo('ACCT', "withdrawal")
 
         //aMgr.end()
         String userId = options.get('userId')
@@ -57,13 +57,13 @@ class FortressAccessMgrTests
         assert ( rbac.start ( options ) )
         assert ( rbac.inRole ( Ids.WASHER ) )
 
-        assert rbac.canDo("Currency", "dry")
-        assert rbac.canDo("Currency", "rinse")
-        assert rbac.canDo("Currency", "soak")
+        assert rbac.canDo('MONEY', "dry")
+        assert rbac.canDo('MONEY', "rinse")
+        assert rbac.canDo('MONEY', "soak")
 
-        assert !rbac.canDo("Account", "deposit")
-        assert !rbac.canDo("Account", "inquiry")
-        assert !rbac.canDo("Account", "withdrawal")
+        assert !rbac.canDo('ACCT', "deposit")
+        assert !rbac.canDo('ACCT', "inquiry")
+        assert !rbac.canDo('ACCT', "withdrawal")
 
         //aMgr.end()
         String userId = options.get('userId')
@@ -80,13 +80,13 @@ class FortressAccessMgrTests
         assert ( rbac.inRole ( Ids.TELLER ) )
         //assert ( rbac.start ( userid, locale: 'East', strength: '2fa', roles: [Ids.WASHER, Ids.TELLER] ) )
 
-        assert !rbac.canDo("Currency", "dry")
-        assert !rbac.canDo("Currency", "rinse")
-        assert !rbac.canDo("Currency", "soak")
+        assert !rbac.canDo('MONEY', "dry")
+        assert !rbac.canDo('MONEY', "rinse")
+        assert !rbac.canDo('MONEY', "soak")
 
-        assert rbac.canDo( "Account", "deposit")
-        assert rbac.canDo( "Account", "inquiry")
-        assert rbac.canDo( "Account", "withdrawal")
+        assert rbac.canDo( 'ACCT', "deposit")
+        assert rbac.canDo( 'ACCT', "inquiry")
+        assert rbac.canDo( 'ACCT', "withdrawal")
 
         //aMgr.end()
         String userId = options.get('userId')
