@@ -70,14 +70,26 @@ Or, add the to the runtime config of the ide as in the System env above.
 Use the uber jar from the build, located under target folder.
 
 ```
-java -classpath target/fortress-core-groovy-0.0.1-SNAPSHOT-jar-with-dependencies.jar:src/test/resources/ org.apache.directory.fortress.core.groovy.FortressAdminMgrTests
+java -classpath target/fortress-core-groovy-0.0.1-SNAPSHOT-jar-with-dependencies.jar:src/test/resources/ org.apache.directory.fortress.FortressAccessMgrTests
+java -classpath target/fortress-core-groovy-0.0.1-SNAPSHOT-jar-with-dependencies.jar:src/test/resources/ org.apache.directory.fortress.FortressAdminMgrTests
+```
+Note there will warnings in the console.  This is expected as roles that have been assigned aren't being activated due to constraints not matching.
+
+For example, Huey signing into the East, the Washer will not activate due to locale constraint (more later).
+
+```
+start-> userId:null password:null constraints:[userId:Huey, password:password, locale:East, strength:2fa, roles:[Washer, Teller]]
+Key: locale Value: East                                                                                          
+Key: strength Value: 2fa                                                                                           
+2020-04-12 16:12:025 INFO  VUtil:615 - validateConstraints role [Washer] for userId[huey] was deactivated reason code [2058]   
+End Huey Teller in the East.                                                                                                 
 ```
 
 ## Understand the security policy
 
-If you read the 'toward an attribute-based' article listed above, this is a similar use case.  Instead of stooges, curly, moe, larry
-we have ducks, huey, dewey and louie.  Again centered around a banking scenario.  The ducks can be either a Teller or Washer but 
-are limited in which branches this may occur in.
+If you read 'toward an attribute-based' article listed above, here is a similar use case.  Instead of stooges, curly, moe, larry
+we have ducks, huey, dewey and louie.  Again centered around a simple banking scenario.  These ducks can be either a Teller or Washer but 
+are limited which branches this may occur in, and never both (roles) at the same time, due to a dynamic separation of duty constraint placed between them.
 
 An additional constraint has been placed on the 'Teller' role.  That is not only is 'locale' verified, now we must also verify the 'strength'
 of the authentication.  The idea, we want to be sure Tellers have been strongly authenticated.  Washers perhaps not as sensitive of operation will only require valid locale.

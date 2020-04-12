@@ -1,8 +1,9 @@
-package org.apache.directory.fortress.core.groovy
+package org.apache.directory.fortress
 
-import org.apache.directory.fortress.GroovyAccessMgr
-import org.apache.directory.fortress.Ids
 
+/**
+ *
+ */
 class FortressAccessMgrTests
 {
     def abacConstraints()
