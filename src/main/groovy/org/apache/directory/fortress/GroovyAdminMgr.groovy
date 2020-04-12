@@ -20,8 +20,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature
 class GroovyAdminMgr
 {
     String reason
-    // Root element of the fortress entity model.
-    private Class BASE_CLASS = FortEntity.class
 
     // A property on the model used to map from FortressEntity to the particular subclass, user, role, ...
     private String FQDN = 'fqcn'
@@ -51,7 +49,7 @@ class GroovyAdminMgr
                 case 'USER':
                     AdminMgr adminMgr = AdminMgrFactory.createInstance()
                     options.put(FQDN, User.class.getName())
-                    User user = get( options, BASE_CLASS )
+                    User user = get( options )
                     print "user: $user "
                     switch ( operation.toUpperCase() )
                     {
@@ -73,7 +71,7 @@ class GroovyAdminMgr
                 case 'ORGUNIT':
                     DelAdminMgr delMgr = DelAdminMgrFactory.createInstance()
                     options.put(FQDN, OrgUnit.class.getName())
-                    OrgUnit ou = get( options, BASE_CLASS )
+                    OrgUnit ou = get( options )
                     print "ou: $ou "
                     switch ( operation.toUpperCase() )
                     {
@@ -95,7 +93,7 @@ class GroovyAdminMgr
                 case 'ROLE':
                     AdminMgr adminMgr = AdminMgrFactory.createInstance()
                     options.put(FQDN, Role.class.getName())
-                    Role role = get( options, BASE_CLASS )
+                    Role role = get( options )
                     print "role: $role "
                     switch ( operation.toUpperCase() )
                     {
@@ -117,7 +115,7 @@ class GroovyAdminMgr
                 case 'SDSET':
                     AdminMgr adminMgr = AdminMgrFactory.createInstance()
                     options.put(FQDN, SDSet.class.getName())
-                    SDSet sdset = get( options, BASE_CLASS )
+                    SDSet sdset = get( options )
                     print "sdset: $sdset "
                     switch ( operation.toUpperCase() )
                     {
@@ -148,14 +146,14 @@ class GroovyAdminMgr
                     switch ( operation.toUpperCase() )
                     {
                         case 'ENABLE':
-                            RoleConstraint constraint = get( options, BASE_CLASS )
+                            RoleConstraint constraint = get( options )
                             print "roleconstraint: $constraint "
                             println ' add...'
                             constraint.setType( RoleConstraint.RCType.USER )
                             adminMgr.enableRoleConstraint( new Role(constraint.getId()), constraint )
                             break
                         case 'DISABLE':
-                            RoleConstraint constraint = get( options, BASE_CLASS )
+                            RoleConstraint constraint = get( options )
                             print "roleconstraint: $constraint "
                             println ' delete...'
                             constraint.setType( RoleConstraint.RCType.USER )
@@ -185,7 +183,7 @@ class GroovyAdminMgr
                 case 'USERROLE':
                     AdminMgr adminMgr = AdminMgrFactory.createInstance()
                     options.put(FQDN, UserRole.class.getName())
-                    UserRole uRole = get( options, BASE_CLASS )
+                    UserRole uRole = get( options )
                     print "userrole: $uRole "
                     switch ( operation.toUpperCase() )
                     {
@@ -207,7 +205,7 @@ class GroovyAdminMgr
                 case 'PERMISSION':
                     AdminMgr adminMgr = AdminMgrFactory.createInstance()
                     options.put(FQDN, Permission.class.getName())
-                    Permission perm = get( options, BASE_CLASS )
+                    Permission perm = get( options )
                     print "permission: $perm "
                     switch ( operation.toUpperCase() )
                     {
@@ -229,7 +227,7 @@ class GroovyAdminMgr
                 case 'PERMOBJ':
                     AdminMgr adminMgr = AdminMgrFactory.createInstance()
                     options.put(FQDN, PermObj.class.getName())
-                    PermObj pObj = get( options, BASE_CLASS )
+                    PermObj pObj = get( options )
                     print "permobj: $pObj "
                     switch ( operation.toUpperCase() )
                     {
@@ -250,7 +248,7 @@ class GroovyAdminMgr
                 case 'PERMGRANT':
                     AdminMgr adminMgr = AdminMgrFactory.createInstance()
                     options.put(FQDN, PermGrant.class.getName())
-                    PermGrant grant = get( options, BASE_CLASS )
+                    PermGrant grant = get( options )
                     print "permgrant: $grant "
                     switch ( operation.toUpperCase() )
                     {
@@ -293,17 +291,16 @@ class GroovyAdminMgr
      * Use Jackson to map->Fortress Entity.
      *
      * @param map directly corresponds with Fortress entity model.
-     * @param fortress subclass
      * @param ignore set to true to ignore unknown property names.
      * @return subclass for FortEntity
      */
-    private def get ( Map<String, ?> map, Class cls, boolean ignore=false )
+    private def get ( Map<String, ?> map, boolean ignore=false )
     {
         ObjectMapper mapper
         if ( !ignore )
             mapper = new ObjectMapper()
         else
             mapper = new ObjectMapper().configure( DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        return mapper.convertValue(map, cls)
+        return mapper.convertValue(map, FortEntity.class)
     }
 }
