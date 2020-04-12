@@ -11,4 +11,10 @@ Note: Fortress config can be set using system properties containing coordinates 
 
 Add to runtime classpath:  ```src/test/resources``` which contains the config files for fortress (if not set via sys props), ehcache and log4j.
 
+## Running tests
+
+```
+java -classpath target/fortress-core-groovy-0.0.1-SNAPSHOT-jar-with-dependencies.jar:src/test/resources/ org.apache.directory.fortress.core.groovy.AddFortressAbacDataTest
+```
+
 

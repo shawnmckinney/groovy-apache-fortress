@@ -38,11 +38,13 @@ class GroovyAdminMgr
      * @param entity name, i.e. not fully qualified class name. e.g. user, role, permission, permobj, roleconstraint, etc...
      * @return false if error or exception occurs.  Relies on the apache fortress runtime for validation checks.
      */
-    boolean edit (Map<String, String> options=[:], String operation, String entity )
+    //boolean edit (Map<String, String> options=[:], String operation, String entity )
+    //boolean edit (Map<String> options=[:], String operation, String entity )
+    boolean edit (Map options=[:], String operation, String entity )
     {
         boolean rc = false
         initialize()
-        println "doIt-> options:$options"
+        println "edit-> options:$options"
 
         try
         {
