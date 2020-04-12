@@ -160,14 +160,14 @@ class GroovyAdminMgr
                             adminMgr.disableRoleConstraint( new Role(constraint.getId()), constraint )
                             break
                         case 'ADD':
-                            RoleConstraint constraint = get( options, BASE_CLASS, true )
+                            RoleConstraint constraint = get( options, true )
                             print "roleconstraint: $constraint "
                             println ' add...'
                             constraint.setType( RoleConstraint.RCType.USER )
                             adminMgr.addRoleConstraint( new UserRole(options.get('userId'), constraint.id ), constraint )
                             break
                         case 'DELETE':
-                            RoleConstraint constraint = get( options, BASE_CLASS, true )
+                            RoleConstraint constraint = get( options, true )
                             print "roleconstraint: $constraint "
                             println ' delete...'
                             constraint.setType( RoleConstraint.RCType.USER )

@@ -4,36 +4,35 @@ import org.apache.directory.fortress.GroovyAccessMgr
 
 class GroovyApacheFortressTest
 {
-    GroovyAccessMgr aMgr = new GroovyAccessMgr()
+    //GroovyAccessMgr aMgr = new GroovyAccessMgr()
 
     def abacConstraints()
     {
         // These should all pass...
-        println( 'Test Curly:')
-        isNeither ( 'Curly', 'password')
-        isWasher ( 'Curly', 'password', 'North')
-        isWasher ( 'Curly', 'password', 'South')
-        isTeller ( 'Curly', 'password', 'East')
-        isTeller ( 'Curly', 'password', 'East')
+        println( 'Test Huey:')
+        isNeither ( 'Huey', 'password')
+        isWasher ( 'Huey', 'password', 'North')
+        isWasher ( 'Huey', 'password', 'South')
+        isTeller ( 'Huey', 'password', locale: 'East', strength: '2fa', roles: ["washer", "teller"])
 
-        println( 'Test Moe:')
-        isNeither ( 'Moe', 'password')
-        isWasher ( 'Moe', 'password', 'East')
-        isWasher ( 'Moe', 'password', 'South')
-        isTeller ( 'Moe', 'password', 'North')
+        println( 'Test Dewey:')
+        isNeither ( 'Dewey', 'password')
+        isWasher ( 'Dewey', 'password', 'East')
+        isWasher ( 'Dewey', 'password', 'South')
+        isTeller ( 'Dewey', 'password', locale: 'North', strength: '2fa')
 
-        println( 'Test Larry:')
-        isNeither ( 'Larry', null)
-        isWasher ( 'Larry', null, 'North')
-        isWasher ( 'Larry', null, 'East')
-        isTeller ( 'Larry', null, 'South')
+        println( 'Test Louie:')
+        isNeither ( 'Louie', null)
+        isWasher ( 'Louie', null, 'North')
+        isWasher ( 'Louie', null, 'East')
+        isTeller ( 'Louie', null, locale: 'South', strength: '2fa')
     }
 
     def isNeither ( String userid, String password )
     {
         GroovyAccessMgr rbac = new GroovyAccessMgr()
         // if we don't load specify locale constraint, neither role will be activated:
-        assert ( rbac.start ( userid, roles: ["washers", "tellers"] ) )
+        assert ( rbac.start ( userid, roles: ["washer", "teller"] ) )
 
         assert !rbac.canDo("Currency", "dry")
         assert !rbac.canDo("Currency", "rinse")
@@ -43,7 +42,7 @@ class GroovyApacheFortressTest
         assert !rbac.canDo("Account", "inquiry")
         assert !rbac.canDo("Account", "withdrawal")
 
-        aMgr.end()
+        //aMgr.end()
 
         println ( "End $userid Neither.")
     }
@@ -51,7 +50,7 @@ class GroovyApacheFortressTest
     def isWasher ( String userid, String password, String value )
     {
         GroovyAccessMgr rbac = new GroovyAccessMgr()
-        assert ( rbac.start ( userid, locale: value, roles: ["washers", "tellers"] ) )
+        assert ( rbac.start ( userid, locale: value, roles: ["washer", "teller"] ) )
 
         assert rbac.canDo("Currency", "dry")
         assert rbac.canDo("Currency", "rinse")
@@ -61,16 +60,18 @@ class GroovyApacheFortressTest
         assert !rbac.canDo("Account", "inquiry")
         assert !rbac.canDo("Account", "withdrawal")
 
-        aMgr.end()
+        //aMgr.end()
 
         println ( "End $userid Washer in the $value.")
     }
 
-    def isTeller ( String userid, String password, String value )
+    def isTeller ( Map options=[:], String userid, String password=null )
     {
         GroovyAccessMgr rbac = new GroovyAccessMgr()
 
-        assert ( rbac.start ( userid, locale: value, roles: ["washers", "tellers"] ) )
+        options.put( 'roles', ["washer", "teller"], )
+        assert ( rbac.start ( options, userid ) )
+        //assert ( rbac.start ( userid, locale: 'East', strength: '2fa', roles: ["washer", "teller"] ) )
 
         assert !rbac.canDo("Currency", "dry")
         assert !rbac.canDo("Currency", "rinse")
@@ -80,8 +81,9 @@ class GroovyApacheFortressTest
         assert rbac.canDo( "Account", "inquiry")
         assert rbac.canDo( "Account", "withdrawal")
 
-        aMgr.end()
+        //aMgr.end()
 
+        String value = options.get('locale')
         println ( "End $userid Teller in the $value.")
     }
 
