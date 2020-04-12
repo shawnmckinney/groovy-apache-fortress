@@ -1,4 +1,4 @@
-package org.apache.directory.fortress.core.groovy
+package org.apache.directory.fortress
 
 import org.apache.directory.fortress.core.AccessMgr;
 import org.apache.directory.fortress.core.AccessMgrFactory

@@ -1,5 +1,8 @@
 package org.apache.directory.fortress.core.groovy
 
+import org.apache.directory.fortress.GroovyAccessMgr
+import org.apache.directory.fortress.GroovyAdminMgr
+
 class AddFortressAbacDataTest
 {
     GroovyAccessMgr aMgr = new GroovyAccessMgr()

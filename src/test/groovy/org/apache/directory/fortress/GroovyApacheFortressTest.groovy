@@ -1,5 +1,7 @@
 package org.apache.directory.fortress.core.groovy
 
+import org.apache.directory.fortress.GroovyAccessMgr
+
 class GroovyApacheFortressTest
 {
     GroovyAccessMgr aMgr = new GroovyAccessMgr()
