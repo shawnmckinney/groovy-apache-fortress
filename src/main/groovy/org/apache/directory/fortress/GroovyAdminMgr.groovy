@@ -293,7 +293,7 @@ class GroovyAdminMgr
      * Use Jackson to map->Fortress Entity.
      *
      * @param map directly corresponds with Fortress entity model.
-     * @param cls name of fortress class. Not full qualified or case sensitive. e.g. user, role, permission, ...
+     * @param fortress subclass
      * @param ignore set to true to ignore unknown property names.
      * @return subclass for FortEntity
      */
