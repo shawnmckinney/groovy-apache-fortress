@@ -3,11 +3,11 @@ package org.apache.directory.fortress
 /**
  *
  */
-class FortressAdminMgrTests
+class GroovyAdminMgrTests
 {
     static void main (def args)
     {
-        def test = new FortressAdminMgrTests()
+        def test = new GroovyAdminMgrTests()
         test.begin()
         System.exit( 0 );
     }
