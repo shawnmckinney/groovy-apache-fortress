@@ -17,6 +17,10 @@ import org.apache.directory.fortress.core.model.User
 import org.apache.directory.fortress.core.model.UserRole
 import com.fasterxml.jackson.databind.DeserializationFeature
 
+/**
+ * Wrapper for the Apache Fortress AdminMgr.  Not thread safe.
+ *
+ */
 class GroovyAdminMgr
 {
     String reason
