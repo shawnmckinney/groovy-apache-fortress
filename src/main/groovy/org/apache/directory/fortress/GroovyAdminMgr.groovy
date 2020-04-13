@@ -16,6 +16,8 @@ import org.apache.directory.fortress.core.model.SDSet
 import org.apache.directory.fortress.core.model.User
 import org.apache.directory.fortress.core.model.UserRole
 import com.fasterxml.jackson.databind.DeserializationFeature
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 /**
  * Wrapper for the Apache Fortress AdminMgr.  Not thread safe.
@@ -23,6 +25,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature
  */
 class GroovyAdminMgr
 {
+    private static final Logger LOG = LoggerFactory.getLogger( GroovyAdminMgr.class.getName() );
     String reason
 
     // A property on the model used to map from FortressEntity to the particular subclass, user, role, ...
@@ -44,7 +47,7 @@ class GroovyAdminMgr
     {
         boolean rc = false
         initialize()
-        println "$operation: $entity: $options"
+        LOG.info "$operation: $entity: $options"
         try
         {
             switch ( entity.toLowerCase() )
@@ -134,25 +137,25 @@ class GroovyAdminMgr
                     {
                         case Ids.ENABLE:
                             RoleConstraint constraint = get( options )
-                            print "roleconstraint: $constraint "
+                            LOG.info "roleconstraint: $constraint "
                             constraint.setType( RoleConstraint.RCType.USER )
                             adminMgr.enableRoleConstraint( new Role(constraint.getId()), constraint )
                             break
                         case Ids.DISABLE:
                             RoleConstraint constraint = get( options )
-                            print "roleconstraint: $constraint "
+                            LOG.info "roleconstraint: $constraint "
                             constraint.setType( RoleConstraint.RCType.USER )
                             adminMgr.disableRoleConstraint( new Role(constraint.getId()), constraint )
                             break
                         case Ids.ADD:
                             RoleConstraint constraint = get( options, true )
-                            print "roleconstraint: $constraint "
+                            LOG.info "roleconstraint: $constraint "
                             constraint.setType( RoleConstraint.RCType.USER )
                             adminMgr.addRoleConstraint( new UserRole(options.get('userId'), constraint.id ), constraint )
                             break
                         case Ids.DELETE:
                             RoleConstraint constraint = get( options, true )
-                            print "roleconstraint: $constraint "
+                            LOG.info "roleconstraint: $constraint "
                             constraint.setType( RoleConstraint.RCType.USER )
                             adminMgr.removeRoleConstraint( new UserRole(options.get('userId'), constraint.id ), constraint )
                             break
@@ -239,13 +242,13 @@ class GroovyAdminMgr
             }
             if ( reason == null )
                 rc = true
-            else
-                println reason
         }
         catch ( e )
         {
             reason = e.toString()
         }
+        if ( !rc )
+            LOG.warn( reason )
         return rc
     }
 

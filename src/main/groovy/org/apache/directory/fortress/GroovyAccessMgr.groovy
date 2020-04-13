@@ -6,6 +6,8 @@ import org.apache.directory.fortress.core.model.Permission
 import org.apache.directory.fortress.core.model.RoleConstraint
 import org.apache.directory.fortress.core.model.Session
 import org.apache.directory.fortress.core.model.User
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 /**
  * Wrapper for Apache Fortress AccessMgr.  This class is not thread safe.
@@ -14,6 +16,7 @@ import org.apache.directory.fortress.core.model.User
  */
 class GroovyAccessMgr
 {
+    private static final Logger LOG = LoggerFactory.getLogger( GroovyAccessMgr.class.getName() );
     Session session
     String reason
 
@@ -38,7 +41,7 @@ class GroovyAccessMgr
         boolean rc = false
         initialize()
         String userId, password=null
-        println "start-> options:$options"
+        LOG.info "start-> options:$options"
         List<RoleConstraint> constraints;
         String[] roles;
         for (entry in options)
@@ -63,7 +66,7 @@ class GroovyAccessMgr
                 constraint.setKey( entry.key )
                 constraint.setValue( entry.value )
                 constraints.add( constraint )
-                println "Key: $entry.key Value: $entry.value"
+                LOG.info "Key: $entry.key Value: $entry.value"
             }
         }
         try
