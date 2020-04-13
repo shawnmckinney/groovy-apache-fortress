@@ -36,7 +36,7 @@ class GroovyAccessMgr
      * Constraints (constraints) are used during the role activation phase, for processing dynamic attributes, e.g. locale.
      * @return boolean true if successful, otherwise false, with reason set.
      */
-    boolean start( Map options=[:] )
+    boolean start( Map<String,?> options=[:] )
     {
         boolean rc = false
         initialize()

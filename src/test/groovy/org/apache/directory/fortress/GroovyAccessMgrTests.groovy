@@ -31,7 +31,7 @@ class GroovyAccessMgrTests
         isNeither ( userId: 'Louie', locale: 'South' )
     }
 
-    def isNeither ( Map options=[:] )
+    def isNeither ( Map<String,?> options=[:] )
     {
         GroovyAccessMgr rbac = new GroovyAccessMgr()
         // if we don't load specify locale constraint, neither role will be activated:
@@ -52,7 +52,7 @@ class GroovyAccessMgrTests
         println ( "End $userId Neither.")
     }
 
-    def isWasher ( Map options=[:] )
+    def isWasher ( Map<String,?> options=[:] )
     {
         GroovyAccessMgr rbac = new GroovyAccessMgr()
         assert ( rbac.start ( options ) )
@@ -72,7 +72,7 @@ class GroovyAccessMgrTests
         println ( "End $userId $TIds.WASHER in the $locale.")
     }
 
-    def isTeller ( Map options=[:] )
+    def isTeller ( Map<String,?> options=[:] )
     {
         GroovyAccessMgr rbac = new GroovyAccessMgr()
 
