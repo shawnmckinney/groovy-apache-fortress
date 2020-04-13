@@ -28,14 +28,6 @@ class GroovyAdminMgr
     private static final Logger LOG = LoggerFactory.getLogger( GroovyAdminMgr.class.getName() );
     String reason
 
-    // A property on the model used to map from FortressEntity to the particular subclass, user, role, ...
-    private String FQDN = 'fqcn'
-
-    private initialize()
-    {
-        reason = null
-    }
-
     /**
      * Wrapper for Apache Fortress Admin Manager APIs.
      * @param options Contains map that is bound for fortress entity.
@@ -119,11 +111,11 @@ class GroovyAdminMgr
                                 adminMgr.createSsdSet( sdset )
                             break
                         case Ids.DELETE:
-                        if( sdset.getType() == SDSet.SDType.DYNAMIC)
-                            adminMgr.deleteDsdSet( sdset )
-                        else
-                            adminMgr.deleteSsdSet( sdset )
-                        break
+                            if( sdset.getType() == SDSet.SDType.DYNAMIC)
+                                adminMgr.deleteDsdSet( sdset )
+                            else
+                                adminMgr.deleteSsdSet( sdset )
+                            break
                         default:
                             reason = "Invalid $entity operation: $operation"
                             break
@@ -137,25 +129,25 @@ class GroovyAdminMgr
                     {
                         case Ids.ENABLE:
                             RoleConstraint constraint = get( options )
-                            LOG.info "roleconstraint: $constraint "
+                            LOG.info "roleconstraint: $constraint"
                             constraint.setType( RoleConstraint.RCType.USER )
                             adminMgr.enableRoleConstraint( new Role(constraint.getId()), constraint )
                             break
                         case Ids.DISABLE:
                             RoleConstraint constraint = get( options )
-                            LOG.info "roleconstraint: $constraint "
+                            LOG.info "roleconstraint: $constraint"
                             constraint.setType( RoleConstraint.RCType.USER )
                             adminMgr.disableRoleConstraint( new Role(constraint.getId()), constraint )
                             break
                         case Ids.ADD:
                             RoleConstraint constraint = get( options, true )
-                            LOG.info "roleconstraint: $constraint "
+                            LOG.info "roleconstraint: $constraint"
                             constraint.setType( RoleConstraint.RCType.USER )
                             adminMgr.addRoleConstraint( new UserRole(options.get('userId'), constraint.id ), constraint )
                             break
                         case Ids.DELETE:
                             RoleConstraint constraint = get( options, true )
-                            LOG.info "roleconstraint: $constraint "
+                            LOG.info "roleconstraint: $constraint"
                             constraint.setType( RoleConstraint.RCType.USER )
                             adminMgr.removeRoleConstraint( new UserRole(options.get('userId'), constraint.id ), constraint )
                             break
@@ -272,5 +264,13 @@ class GroovyAdminMgr
         else
             mapper = new ObjectMapper().configure( DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
         return mapper.convertValue(map, FortEntity.class)
+    }
+
+    // A property on the model used to map from FortressEntity to the particular subclass, user, role, ...
+    private String FQDN = 'fqcn'
+
+    private initialize()
+    {
+        reason = null
     }
 }
