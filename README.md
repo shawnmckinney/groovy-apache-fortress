@@ -70,9 +70,10 @@ Or, add the to the runtime config of the ide as in the System env above.
 Use the uber jar from the build, located under target folder.
 
 ```
-java -classpath target/fortress-core-groovy-0.0.1-SNAPSHOT-jar-with-dependencies.jar:src/test/resources/ org.apache.directory.fortress.FortressAccessMgrTests
 java -classpath target/fortress-core-groovy-0.0.1-SNAPSHOT-jar-with-dependencies.jar:src/test/resources/ org.apache.directory.fortress.FortressAdminMgrTests
+java -classpath target/fortress-core-groovy-0.0.1-SNAPSHOT-jar-with-dependencies.jar:src/test/resources/ org.apache.directory.fortress.FortressAccessMgrTests
 ```
+
 Note there will warnings in the console.  This is expected as roles that have been assigned aren't being activated due to constraints not matching.
 
 For example, Huey signing into the East, the Washer will not activate due to locale constraint (more later).
