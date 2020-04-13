@@ -129,25 +129,21 @@ class GroovyAdminMgr
                     {
                         case Ids.ENABLE:
                             RoleConstraint constraint = get( options )
-                            LOG.info "roleconstraint: $constraint"
                             constraint.setType( RoleConstraint.RCType.USER )
                             adminMgr.enableRoleConstraint( new Role(constraint.getId()), constraint )
                             break
                         case Ids.DISABLE:
                             RoleConstraint constraint = get( options )
-                            LOG.info "roleconstraint: $constraint"
                             constraint.setType( RoleConstraint.RCType.USER )
                             adminMgr.disableRoleConstraint( new Role(constraint.getId()), constraint )
                             break
                         case Ids.ADD:
                             RoleConstraint constraint = get( options, true )
-                            LOG.info "roleconstraint: $constraint"
                             constraint.setType( RoleConstraint.RCType.USER )
                             adminMgr.addRoleConstraint( new UserRole(options.get('userId'), constraint.id ), constraint )
                             break
                         case Ids.DELETE:
                             RoleConstraint constraint = get( options, true )
-                            LOG.info "roleconstraint: $constraint"
                             constraint.setType( RoleConstraint.RCType.USER )
                             adminMgr.removeRoleConstraint( new UserRole(options.get('userId'), constraint.id ), constraint )
                             break
