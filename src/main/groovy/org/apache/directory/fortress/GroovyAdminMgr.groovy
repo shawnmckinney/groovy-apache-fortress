@@ -44,8 +44,7 @@ class GroovyAdminMgr
     {
         boolean rc = false
         initialize()
-        println "edit-> options:$options"
-
+        println "$operation: $entity: $options"
         try
         {
             switch ( entity.toLowerCase() )
@@ -54,15 +53,12 @@ class GroovyAdminMgr
                     AdminMgr adminMgr = AdminMgrFactory.createInstance()
                     options.put(FQDN, User.class.getName())
                     User user = get( options )
-                    print "user: $user "
                     switch ( operation.toLowerCase() )
                     {
                         case Ids.ADD:
-                            println ' add...'
                             adminMgr.addUser( user )
                             break
                         case Ids.DELETE:
-                            println ' delete...'
                             adminMgr.deleteUser( user )
                             break
                         default:
@@ -76,15 +72,12 @@ class GroovyAdminMgr
                     DelAdminMgr delMgr = DelAdminMgrFactory.createInstance()
                     options.put(FQDN, OrgUnit.class.getName())
                     OrgUnit ou = get( options )
-                    print "ou: $ou "
                     switch ( operation.toLowerCase() )
                     {
                         case Ids.ADD:
-                            println ' add...'
                             delMgr.add( ou )
                             break
                         case Ids.DELETE:
-                            println ' delete...'
                             delMgr.delete( ou )
                             break
                         default:
@@ -98,15 +91,12 @@ class GroovyAdminMgr
                     AdminMgr adminMgr = AdminMgrFactory.createInstance()
                     options.put(FQDN, Role.class.getName())
                     Role role = get( options )
-                    print "role: $role "
                     switch ( operation.toLowerCase() )
                     {
                         case Ids.ADD:
-                            println ' add...'
                             adminMgr.addRole( role )
                             break
                         case Ids.DELETE:
-                            println ' delete...'
                             adminMgr.deleteRole( role )
                             break
                         default:
@@ -120,18 +110,15 @@ class GroovyAdminMgr
                     AdminMgr adminMgr = AdminMgrFactory.createInstance()
                     options.put(FQDN, SDSet.class.getName())
                     SDSet sdset = get( options )
-                    print "sdset: $sdset "
                     switch ( operation.toLowerCase() )
                     {
                         case Ids.ADD:
-                            println ' add...'
                             if( sdset.getType() == SDSet.SDType.DYNAMIC)
                                 adminMgr.createDsdSet( sdset )
                             else
                                 adminMgr.createSsdSet( sdset )
                             break
                         case Ids.DELETE:
-                            println ' delete...'
                         if( sdset.getType() == SDSet.SDType.DYNAMIC)
                             adminMgr.deleteDsdSet( sdset )
                         else
@@ -152,28 +139,24 @@ class GroovyAdminMgr
                         case Ids.ENABLE:
                             RoleConstraint constraint = get( options )
                             print "roleconstraint: $constraint "
-                            println ' add...'
                             constraint.setType( RoleConstraint.RCType.USER )
                             adminMgr.enableRoleConstraint( new Role(constraint.getId()), constraint )
                             break
                         case Ids.DISABLE:
                             RoleConstraint constraint = get( options )
                             print "roleconstraint: $constraint "
-                            println ' delete...'
                             constraint.setType( RoleConstraint.RCType.USER )
                             adminMgr.disableRoleConstraint( new Role(constraint.getId()), constraint )
                             break
                         case Ids.ADD:
                             RoleConstraint constraint = get( options, true )
                             print "roleconstraint: $constraint "
-                            println ' add...'
                             constraint.setType( RoleConstraint.RCType.USER )
                             adminMgr.addRoleConstraint( new UserRole(options.get('userId'), constraint.id ), constraint )
                             break
                         case Ids.DELETE:
                             RoleConstraint constraint = get( options, true )
                             print "roleconstraint: $constraint "
-                            println ' delete...'
                             constraint.setType( RoleConstraint.RCType.USER )
                             adminMgr.removeRoleConstraint( new UserRole(options.get('userId'), constraint.id ), constraint )
                             break
@@ -188,15 +171,12 @@ class GroovyAdminMgr
                     AdminMgr adminMgr = AdminMgrFactory.createInstance()
                     options.put(FQDN, UserRole.class.getName())
                     UserRole uRole = get( options )
-                    print "userrole: $uRole "
                     switch ( operation.toLowerCase() )
                     {
                         case Ids.ADD:
-                            println ' add...'
                             adminMgr.assignUser( uRole )
                             break
                         case Ids.DELETE:
-                            println ' delete...'
                             adminMgr.deassignUser( uRole )
                             break
                         default:
@@ -210,15 +190,12 @@ class GroovyAdminMgr
                     AdminMgr adminMgr = AdminMgrFactory.createInstance()
                     options.put(FQDN, Permission.class.getName())
                     Permission perm = get( options )
-                    print "permission: $perm "
                     switch ( operation.toLowerCase() )
                     {
                         case Ids.ADD:
-                            println ' add...'
                             adminMgr.addPermission( perm )
                             break
                         case Ids.DELETE:
-                            println ' delete...'
                             adminMgr.deletePermission( perm )
                             break
                         default:
@@ -232,15 +209,12 @@ class GroovyAdminMgr
                     AdminMgr adminMgr = AdminMgrFactory.createInstance()
                     options.put(FQDN, PermObj.class.getName())
                     PermObj pObj = get( options )
-                    print "permobj: $pObj "
                     switch ( operation.toLowerCase() )
                     {
                         case Ids.ADD:
-                            println ' add...'
                             adminMgr.addPermObj( pObj )
                             break
                         case Ids.DELETE:
-                            println ' delete...'
                             adminMgr.deletePermObj( pObj )
                             break
                         default:
@@ -253,15 +227,12 @@ class GroovyAdminMgr
                     AdminMgr adminMgr = AdminMgrFactory.createInstance()
                     options.put(FQDN, PermGrant.class.getName())
                     PermGrant grant = get( options )
-                    print "permgrant: $grant "
                     switch ( operation.toLowerCase() )
                     {
                         case Ids.ADD:
-                            println ' add...'
                             adminMgr.grantPermission( new Permission( grant.objName, grant.opName ), new Role( grant.roleNm ) )
                             break
                         case Ids.DELETE:
-                            println ' delete...'
                             adminMgr.revokePermission( new Permission( grant.objName, grant.opName ), new Role( grant.roleNm ) )
                             break
                         default:
