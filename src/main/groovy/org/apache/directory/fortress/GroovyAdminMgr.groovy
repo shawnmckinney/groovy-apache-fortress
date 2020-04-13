@@ -62,8 +62,7 @@ class GroovyAdminMgr
                             adminMgr.deleteUser( user )
                             break
                         default:
-                            reason = 'Invalid USER operation'
-                            println "***  Error GroovyAdminMgr: $reason"
+                            reason = "Invalid $entity operation: $operation"
                             break
                     }
                     break
@@ -81,8 +80,7 @@ class GroovyAdminMgr
                             delMgr.delete( ou )
                             break
                         default:
-                            reason = 'Invalid ORGUNIT operation'
-                            println "***  Error GroovyAdminMgr: $reason"
+                            reason = "Invalid $entity operation: $operation"
                             break
                     }
                     break
@@ -100,8 +98,7 @@ class GroovyAdminMgr
                             adminMgr.deleteRole( role )
                             break
                         default:
-                            reason = 'Invalid ROLE operation'
-                            println "***  Error GroovyAdminMgr: $reason"
+                            reason = "Invalid $entity operation: $operation"
                             break
                     }
                     break
@@ -125,8 +122,7 @@ class GroovyAdminMgr
                             adminMgr.deleteSsdSet( sdset )
                         break
                         default:
-                            reason = 'Invalid SDSET operation'
-                            println "***  Error GroovyAdminMgr: $reason"
+                            reason = "Invalid $entity operation: $operation"
                             break
                     }
                     break
@@ -161,8 +157,7 @@ class GroovyAdminMgr
                             adminMgr.removeRoleConstraint( new UserRole(options.get('userId'), constraint.id ), constraint )
                             break
                         default:
-                            reason = 'Invalid ROLECONSTRAINT operation'
-                            println "***  Error GroovyAdminMgr: $reason"
+                            reason = "Invalid $entity operation: $operation"
                             break
                     }
                     break
@@ -180,8 +175,7 @@ class GroovyAdminMgr
                             adminMgr.deassignUser( uRole )
                             break
                         default:
-                            reason = 'Invalid USERROLE operation'
-                            println "***  Error GroovyAdminMgr: $reason"
+                            reason = "Invalid $entity operation: $operation"
                             break
                     }
                     break
@@ -199,8 +193,7 @@ class GroovyAdminMgr
                             adminMgr.deletePermission( perm )
                             break
                         default:
-                            reason = 'Invalid PERMISSION operation'
-                            println "***  Error GroovyAdminMgr: $reason"
+                            reason = "Invalid $entity operation: $operation"
                             break
                     }
                     break
@@ -218,8 +211,7 @@ class GroovyAdminMgr
                             adminMgr.deletePermObj( pObj )
                             break
                         default:
-                            reason = 'Invalid PERMOBJ operation'
-                            println "***  Error GroovyAdminMgr: $reason"
+                            reason = "Invalid $entity operation: $operation"
                             break
                     }
                     break
@@ -236,23 +228,23 @@ class GroovyAdminMgr
                             adminMgr.revokePermission( new Permission( grant.objName, grant.opName ), new Role( grant.roleNm ) )
                             break
                         default:
-                            reason = "Invalid operation: $operation"
-                            println "***  Error GroovyAdminMgr: $reason"
+                            reason = "Invalid $entity operation: $operation"
                             break
                     }
                     break
 
                 default:
-                    reason = 'Invalid entity'
-                    println "***  Error GroovyAdminMgr: $reason"
-                    return false
+                    reason = "Invalid entity: $entity"
+                    break;
             }
-            rc = true
+            if ( reason == null )
+                rc = true
+            else
+                println reason
         }
         catch ( e )
         {
             reason = e.toString()
-            println "***  Exception GroovyAdminMgr: $reason"
         }
         return rc
     }
