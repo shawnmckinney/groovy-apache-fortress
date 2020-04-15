@@ -13,7 +13,7 @@ class GroovyAccessMgrTests
         isNeither ( userId: 'Huey', password: 'password')
         isWasher ( userId: 'Huey', password: 'password', locale: 'North')
         isWasher ( userId: 'Huey', password: 'password', locale: 'South')
-        isTeller ( userId: 'Huey', password: 'password', locale: 'East', strength: '2fa', roles: [Ids.WASHER, Ids.TELLER])
+        isTeller ( userId: 'Huey', password: 'password', locale: 'East', strength: '2fa', roles: [TIds.WASHER, TIds.TELLER])
         isNeither ( userId: 'Huey', password: 'password', locale: 'East')
 
         println( 'Test Dewey:')
