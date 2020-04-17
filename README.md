@@ -4,15 +4,15 @@ A groovy wrapper for Apache Fortress
 ## Overview
 
 This sample uses Apache Groovy to wrap Fortress APIs.  It provides a deep dive into advanced RBAC use cases showing a novel way of invoking its APIs.
-It is not a basic tutorial on how RBAC works.  There are other places for that, starting with the Apache Fortress project page.
+It's not a basic tutorial on how RBAC works.  There are other places for that, start with the [Apache Fortress project page](https://directory.apache.org/fortress/).
 
 ## How it works
 
 Basically there are a couple of test modules created one for adding the RBAC policy, the other for verifying it.  
 Each test module uses a Groovy wrapper to do its work.
 
-1. FortressAdminMgrTests -> GroovyAdminMgr -> Apache Fortress AdminMgr (insert policy)
-2. FortressAccessMgrTests -> GroovyAccessMgr -> Apache Fortress AccessMgr (verify policy)
+1. GroovyAdminMgrTests -> GroovyAdminMgr -> Apache Fortress AdminMgr (insert policy)
+2. GroovyAccessMgrTests -> GroovyAccessMgr -> Apache Fortress AccessMgr (verify policy)
 
 ## More about the test cases
 
