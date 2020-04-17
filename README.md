@@ -8,16 +8,16 @@ It's not a basic tutorial on how RBAC works.  There are other places for that, s
 
 ## How it works
 
-Basically there are a couple of test modules created one for adding the RBAC policy, the other for verifying it.  
-Each test module uses a Groovy wrapper to do its work.
+There's one module for adding the RBAC policy, another for verifying it.  
+Each test module uses its Groovy wrapper, that wraps Apache Fortress manager apis, in order to do the work.
 
 1. GroovyAdminMgrTests -> GroovyAdminMgr -> Apache Fortress AdminMgr (insert policy)
 2. GroovyAccessMgrTests -> GroovyAccessMgr -> Apache Fortress AccessMgr (verify policy)
 
 ## More about the test cases
 
-Using Apache Fortress ABAC which places dynamic constraints on roles.  The idea is limiting when they can be activated.  
-For more on this concept checkout these blog posts:
+Apache Fortress can place dynamic constraints on roles.  The idea is limiting when a particular role can be activated, under what conditions.  
+For more on this concept:
 
  * [Towards an Attribute-Based Role-Based Access Control System](https://iamfortress.net/2018/07/07/towards-an-attribute-based-role-based-access-control-system/)
  * [Adding Contextual Information to the RBAC Decision](https://symas.com/adding-contextual-information-to-the-rbac-decision/)
@@ -31,13 +31,11 @@ We can iterate through a bunch of scenarios really fast.
 
 ## How do I run the test cases?
 
-They can run from within a particular Java IDE, like Netbeans, Eclipse or Intellij. Alternatively, they can be run from the command line.
+Run from within a particular Java IDE, like Netbeans, Eclipse or Intellij. Or, run them from the command line.
 
 ## What else do I need?
 
-An operational Apache Fortress runtime using one of its supported backends, either OpenLDAP or Apache Directory.
-
-For example, checkout the quickstarts:
+An operational Apache Fortress runtime using one of its supported backends: e.g. OpenLDAP or Apache Directory:
  * [README-QUICKSTART-APACHEDS](https://github.com/apache/directory-fortress-core/blob/master/README-QUICKSTART-APACHEDS.md)
  * [README-QUICKSTART-SLAPD](https://github.com/apache/directory-fortress-core/blob/master/README-QUICKSTART-SLAPD.md)
  * [README-QUICKSTART-DOCKER-APACHEDS](https://github.com/apache/directory-fortress-core/blob/master/README-QUICKSTART-DOCKER-APACHEDS.md)
@@ -45,7 +43,7 @@ For example, checkout the quickstarts:
  
 ## Fortress Config w/ System Properties:
 
-Fortress config can be bootstrapped in one of two ways:
+Fortress config is bootstrapped in one of two ways:
 
 1. System Env
 
