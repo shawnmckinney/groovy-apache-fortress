@@ -9,10 +9,10 @@ It's not a basic tutorial on how RBAC works.  There are other places for that, s
 ## How it works
 
 There's one module for adding the RBAC policy, another for verifying it.  
-Each test module uses its Groovy wrapper, that wraps Apache Fortress manager apis, in order to do the work.
+Each test module uses its wrapper for invoking Apache Fortress manager apis, in order to do the work.
 
-1. GroovyAdminMgrTests -> GroovyAdminMgr -> Apache Fortress AdminMgr (insert policy)
-2. GroovyAccessMgrTests -> GroovyAccessMgr -> Apache Fortress AccessMgr (verify policy)
+1. [GroovyAdminMgrTests](src/test/groovy/org/apache/directory/fortress/GroovyAdminMgrTests.groovy) -> [GroovyAdminMgr](src/main/groovy/org/apache/directory/fortress/GroovyAdminMgr.groovy) -> Apache Fortress AdminMgr
+2. [GroovyAccessMgrTests](src/test/groovy/org/apache/directory/fortress/GroovyAcessMgrTests.groovy) -> [GroovyAccessMgr](src/main/groovy/org/apache/directory/fortress/GroovyAccessMgr.groovy) -> Apache Fortress AccessMgr
 
 ## More about the test cases
 
