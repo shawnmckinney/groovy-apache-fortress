@@ -1,15 +1,22 @@
-# groovy_apache_fortress
-A groovy wrapper for Apache Fortress
+# What's groovy-apache-fortress?
+
+A wrapper for Apache Fortress APIs written in Groovy.
 
 ## Overview
 
-This sample uses Apache Groovy to wrap Fortress APIs.  It provides a deep dive into advanced RBAC use cases showing a novel way of invoking its APIs.
-It's not a basic tutorial on how RBAC works.  There are other places for that, start with the [Apache Fortress project page](https://directory.apache.org/fortress/).
+This sample uses Apache Groovy to wrap Fortress AccessMgr and AdminMgr APIs.  It provides a deep dive into advanced RBAC use cases showing a novel way of invoking its APIs.
+This is not a basic tutorial on the fundamentals of RBAC.  There are other places for that, start with the [Apache Fortress project page](https://directory.apache.org/fortress/).
 
-## How it works
+## Why Groovy?
 
-There's one module for adding the RBAC policy, another for verifying it.  
-Each test module uses its wrapper for invoking Apache Fortress manager apis, in order to do the work.
+Apache Groovy is a dynamic language that runs on top of the Java Virtual Machine. Its simple language syntax rules allowing test cases to be written quickly and clearly.
+
+We can iterate through a bunch of scenarios really fast.  
+
+## How this sample works
+
+There's one module for adding the RBAC policy (AdminMgr), another for verifying it (AccessMgr).  
+Each test module uses its wrapper for invoking Apache Fortress manager APIs, in order to do the work.
 
 1. [GroovyAdminMgrTests](src/test/groovy/org/apache/directory/fortress/GroovyAdminMgrTests.groovy) -> [GroovyAdminMgr](src/main/groovy/org/apache/directory/fortress/GroovyAdminMgr.groovy) -> Apache Fortress AdminMgr
 2. [GroovyAccessMgrTests](src/test/groovy/org/apache/directory/fortress/GroovyAccessMgrTests.groovy) -> [GroovyAccessMgr](src/main/groovy/org/apache/directory/fortress/GroovyAccessMgr.groovy) -> Apache Fortress AccessMgr
@@ -22,12 +29,6 @@ For more on this concept:
  * [Towards an Attribute-Based Role-Based Access Control System](https://iamfortress.net/2018/07/07/towards-an-attribute-based-role-based-access-control-system/)
  * [Adding Contextual Information to the RBAC Decision](https://symas.com/adding-contextual-information-to-the-rbac-decision/)
  * [Designing an Authorization System: a Dialogue in Five Scenes](https://iamfortress.net/2019/11/23/designing-an-authorization-system-a-dialogue-in-five-scenes/)
-
-## Why Groovy?
-
-Apache Groovy is a dynamic language that runs on top of the java virtual machine. It simplifies syntax, allowing test cases to more easily emerge from the boilerplate.
-
-We can iterate through a bunch of scenarios really fast.  
 
 ## How do I run the test cases?
 
