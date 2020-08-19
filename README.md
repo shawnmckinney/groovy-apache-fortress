@@ -135,7 +135,7 @@ Louie's assignments:
 | washer     | locale      | east     |
 | washer     | locale      | north    |
 
-Louis can be a teller in the south, if strongly authenticated.  And a washer in the east and north.
+Louie can be a teller in the south, if strongly authenticated.  And a washer in the east and north.
 
 #### 1. User-to-Role Assignment Table
 
