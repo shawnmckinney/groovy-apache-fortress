@@ -4,7 +4,7 @@ A wrapper for Apache Fortress APIs written in Groovy.
 
 ## Overview
 
-This sample uses Apache Groovy to wrap Fortress AccessMgr and AdminMgr APIs.  It provides a deep dive into advanced RBAC use cases showing a novel way of invoking its APIs.
+This sample uses Apache Groovy to wrap Apache Fortress [AccessMgr](https://directory.apache.org/fortress/gen-docs/latest/apidocs/org/apache/directory/fortress/core/AccessMgr.html) and [AdminMgr](https://directory.apache.org/fortress/gen-docs/latest/apidocs/org/apache/directory/fortress/core/AdminMgr.html) APIs.  It provides a deep dive into advanced RBAC use cases showing a novel way of invoking its APIs.
 This is not a basic tutorial on the fundamentals of RBAC.  There are other places for that, start with the [Apache Fortress project page](https://directory.apache.org/fortress/).
 
 ## Why Groovy?
@@ -20,6 +20,13 @@ Each test module uses its wrapper for invoking Apache Fortress manager APIs, in 
 
 1. [GroovyAdminMgrTests](src/test/groovy/org/apache/directory/fortress/GroovyAdminMgrTests.groovy) -> [GroovyAdminMgr](src/main/groovy/org/apache/directory/fortress/GroovyAdminMgr.groovy) -> Apache Fortress AdminMgr
 2. [GroovyAccessMgrTests](src/test/groovy/org/apache/directory/fortress/GroovyAccessMgrTests.groovy) -> [GroovyAccessMgr](src/main/groovy/org/apache/directory/fortress/GroovyAccessMgr.groovy) -> Apache Fortress AccessMgr
+
+Notice how these tests differ when written in Groovy vs Java:
+
+3. [JavaAdminMgrTests](src/test/java/org/apache/directory/fortress/GroovyAdminMgrTests.java).
+4. [JavaAccessMgrTests](src/test/java/org/apache/directory/fortress/AccessMgrTests.java).
+
+Both do exactly the same thing, Groovy does it with less boilerplate, which makes the code easier to read and write.  Test cases are hard enough to write, anything that makes it easier, helps.
 
 ## More about the test cases
 
