@@ -3,17 +3,14 @@ package org.apache.directory.fortress
 
 class GroovyAdminMgrTests
 {
-
     static void main (def args)
     {
-        def test = new GroovyAdminMgrTests()
-        test.begin()
+        new GroovyAdminMgrTests().edit()
         System.exit( 0 );
     }
 
-    def begin()
+    def edit()
     {
-        println( 'Get them ducks in a row.')
         del ( )
         add ( )
     }
@@ -21,7 +18,6 @@ class GroovyAdminMgrTests
     def add ( )
     {
         GroovyAdminMgr admin = new GroovyAdminMgr()
-
         //         Operation      Entity                Attribute Map
         admin.edit( Ids.ADD,    Ids.ORGUNIT,        name: TIds.DEFAULT, type: 'USER' )
         admin.edit( Ids.ADD,    Ids.ROLE,           name: TIds.WASHER )
@@ -75,7 +71,6 @@ class GroovyAdminMgrTests
         admin.edit( Ids.ADD, Ids.PERMGRANT,         roleNm: TIds.TELLER, objName: 'ACCT', opName: 'withdrawal' )
     }
 
-
     def del ( )
     {
         GroovyAdminMgr admin = new GroovyAdminMgr()
@@ -102,5 +97,4 @@ class GroovyAdminMgrTests
         admin.edit( Ids.DELETE, Ids.USER,       userId: 'louie' )
         admin.edit( Ids.DELETE, Ids.ORGUNIT,    name: TIds.DEFAULT, type: 'USER' )
     }
-
 }

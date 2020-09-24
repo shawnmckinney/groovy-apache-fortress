@@ -30,24 +30,32 @@ public class AccessMgrTests extends TestCase
     }
 
 
-    public void testAbacConstraints()
+    public static Test suite()
+    {
+        TestSuite suite = new TestSuite();
+        suite.addTest( new AccessMgrTests( "verify" ) );
+        return suite;
+    }
+
+
+    public void verify()
     {
         LOG.info( "Test Huey: ");
-        // Negative use case, verify constraints are being evaluated:
+        // Negative test case, verify constraints are being evaluated:
         isNeither( new User( "Huey", "password") );
         isWasher( new User( "Huey", "password"), "north" );
         isWasher( new User( "Huey", "password"), "south" );
         isTeller( new User( "Huey", "password"), "east" );
 
         LOG.info( "Test Dewey: ");
-        // Negative use case, verify constraints are being evaluated:
+        // Negative test case, verify constraints are being evaluated:
         isNeither( new User( "Dewey", "password") );
         isWasher( new User( "Dewey", "password"), "east" );
         isWasher( new User( "Dewey", "password"), "south" );
         isTeller( new User( "Dewey", "password"), "north" );
 
         LOG.info( "Test Louie: ");
-        // Negative use case, verify constraints are being evaluated:
+        // Negative test case, verify constraints are being evaluated:
         isNeither( new User( "Louie", "password") );
         isWasher( new User( "Louie", "password"), "east" );
         isWasher( new User( "Louie", "password"), "north" );
@@ -153,12 +161,5 @@ public class AccessMgrTests extends TestCase
             LOG.error( szLocation + " caught SecurityException rc=" + ex.getErrorId() + ", msg=" + ex.getMessage(), ex );
             fail( ex.getMessage() );
         }
-    }
-
-    public static Test suite()
-    {
-        TestSuite suite = new TestSuite();
-        suite.addTest( new AccessMgrTests( "testAbacConstraints" ) );
-        return suite;
     }
 }
