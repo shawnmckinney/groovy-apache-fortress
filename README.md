@@ -23,7 +23,7 @@ Each test module uses its wrapper for invoking Apache Fortress manager APIs, in 
 
 Notice how these tests differ when written in Groovy vs Java:
 
-3. [JavaAdminMgrTests](src/test/java/org/apache/directory/fortress/GroovyAdminMgrTests.java).
+3. [JavaAdminMgrTests](src/test/java/org/apache/directory/fortress/AdminMgrTests.java).
 4. [JavaAccessMgrTests](src/test/java/org/apache/directory/fortress/AccessMgrTests.java).
 
 Both do exactly the same thing, Groovy does it with less boilerplate, which makes the code easier to read and write.  Test cases are hard enough to write, anything that makes it easier, helps.
