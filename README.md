@@ -1,3 +1,5 @@
+#### © 2020 iamfortress.net
+
 # What's groovy-apache-fortress?
 
 A wrapper for Apache Fortress APIs written in Groovy.
