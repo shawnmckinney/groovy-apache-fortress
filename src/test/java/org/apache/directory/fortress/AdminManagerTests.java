@@ -44,9 +44,9 @@ public class AdminManagerTests extends TestCase
         try
         {
             DelAdminMgr delAdminMgr = DelAdminMgrFactory.createInstance();
-            delAdminMgr.add( new OrgUnit( TIds.DEFAULT, OrgUnit.Type.USER ) );
-
             AdminMgr adminMgr = AdminMgrFactory.createInstance();
+
+            delAdminMgr.add( new OrgUnit( TIds.DEFAULT, OrgUnit.Type.USER ) );
             Role washer = adminMgr.addRole( new Role ( TIds.WASHER ) );
 
             RoleConstraint locale = new RoleConstraint();

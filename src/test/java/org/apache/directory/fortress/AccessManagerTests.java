@@ -49,97 +49,47 @@ public class AccessManagerTests extends TestCase
 
     public void testAbacConstraints()
     {
-        System.out.println( " Test Huey: " );
+        LOG.info( "Test Huey: ");
 
         // Negative use case, verify constraints are being evaluated:
         isNeither( new User( "Huey", "password") );
 
         // Huey is a washer in the north:
-        List<RoleConstraint> constraints = new ArrayList();
-        RoleConstraint constraint = new RoleConstraint();
-        constraint.setKey( "locale" );
-        constraint.setValue( "north" );
-        constraints.add( constraint );
-        isWasher( new User( "Huey", "password"), constraints );
+        isWasher( new User( "Huey", "password"), "north" );
 
         // Huey is a washer in the south:
-        constraints = new ArrayList();
-        constraint = new RoleConstraint();
-        constraint.setKey( "locale" );
-        constraint.setValue( "south" );
-        constraints.add( constraint );
-        isWasher( new User( "Huey", "password"), constraints );
+        isWasher( new User( "Huey", "password"), "south" );
 
         // Huey is a teller in the east:
-        constraints = new ArrayList();
-        constraint = new RoleConstraint();
-        constraint.setKey( "locale" );
-        constraint.setValue( "east" );
-        constraint = new RoleConstraint();
-        constraint.setKey( "strength" );
-        constraint.setValue( "2fa" );
-        constraints.add( constraint );
-        isTeller( new User( "Huey", "password"), constraints );
+        isTeller( new User( "Huey", "password"), "east" );
+
+        LOG.info( "Test Dewey: ");
 
         // Negative use case, verify constraints are being evaluated:
         isNeither( new User( "Dewey", "password") );
 
         // Dewey is a washer in the east:
-        constraints = new ArrayList();
-        constraint = new RoleConstraint();
-        constraint.setKey( "locale" );
-        constraint.setValue( "east" );
-        constraints.add( constraint );
-        isWasher( new User( "Dewey", "password"), constraints );
+        isWasher( new User( "Dewey", "password"), "east" );
 
         // Dewey is a washer in the south:
-        constraints = new ArrayList();
-        constraint = new RoleConstraint();
-        constraint.setKey( "locale" );
-        constraint.setValue( "south" );
-        constraints.add( constraint );
-        isWasher( new User( "Dewey", "password"), constraints );
+        isWasher( new User( "Dewey", "password"), "south" );
 
         // Dewey is a teller in the north:
-        constraints = new ArrayList();
-        constraint = new RoleConstraint();
-        constraint.setKey( "locale" );
-        constraint.setValue( "north" );
-        constraint = new RoleConstraint();
-        constraint.setKey( "strength" );
-        constraint.setValue( "2fa" );
-        constraints.add( constraint );
-        isTeller( new User( "Dewey", "password"), constraints );
+        isTeller( new User( "Dewey", "password"), "north" );
+
+        LOG.info( "Test Louie: ");
 
         // Negative use case, verify constraints are being evaluated:
         isNeither( new User( "Louie", "password") );
 
         // Louie is a washer in the east:
-        constraints = new ArrayList();
-        constraint = new RoleConstraint();
-        constraint.setKey( "locale" );
-        constraint.setValue( "east" );
-        constraints.add( constraint );
-        isWasher( new User( "Louie", "password"), constraints );
+        isWasher( new User( "Louie", "password"), "east" );
 
         // Louie is a washer in the north:
-        constraints = new ArrayList();
-        constraint = new RoleConstraint();
-        constraint.setKey( "locale" );
-        constraint.setValue( "north" );
-        constraints.add( constraint );
-        isWasher( new User( "Louie", "password"), constraints );
+        isWasher( new User( "Louie", "password"), "north" );
 
         // Louie is a teller in the south:
-        constraints = new ArrayList();
-        constraint = new RoleConstraint();
-        constraint.setKey( "locale" );
-        constraint.setValue( "south" );
-        constraint = new RoleConstraint();
-        constraint.setKey( "strength" );
-        constraint.setValue( "2fa" );
-        constraints.add( constraint );
-        isTeller( new User( "Louie", "password"), constraints );
+        isTeller( new User( "Louie", "password"), "south" );
     }
 
     public void isNeither( User user )
@@ -168,9 +118,20 @@ public class AccessManagerTests extends TestCase
         }
     }
 
-    public void isTeller( User user, List<RoleConstraint> constraints )
+    public void isTeller( User user, String value )
     {
         String szLocation = ".isTeller";
+
+        List<RoleConstraint> constraints = new ArrayList();
+        RoleConstraint constraint = new RoleConstraint();
+        constraint.setKey( "locale" );
+        constraint.setValue( value );
+        constraints.add( constraint );
+
+        constraint = new RoleConstraint();
+        constraint.setKey( "strength" );
+        constraint.setValue( "2fa" );
+
         try
         {
             // Instantiate the AccessMgr implementation.
@@ -194,9 +155,16 @@ public class AccessManagerTests extends TestCase
         }
     }
 
-    public void isWasher( User user, List<RoleConstraint> constraints )
+    public void isWasher( User user, String value )
     {
         String szLocation = ".isWasher";
+
+        List<RoleConstraint> constraints = new ArrayList();
+        RoleConstraint constraint = new RoleConstraint();
+        constraint.setKey( "locale" );
+        constraint.setValue( value );
+        constraints.add( constraint );
+
         try
         {
             // Instantiate the AccessMgr implementation.
