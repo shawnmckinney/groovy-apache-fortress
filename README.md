@@ -7,11 +7,11 @@
 This sample uses Apache Groovy to wrap Apache Fortress [AccessMgr](https://directory.apache.org/fortress/gen-docs/latest/apidocs/org/apache/directory/fortress/core/AccessMgr.html) and [AdminMgr](https://directory.apache.org/fortress/gen-docs/latest/apidocs/org/apache/directory/fortress/core/AdminMgr.html) APIs.  It provides a deep dive into advanced RBAC use cases showing a novel way of invoking its APIs.
 It's not a basic tutorial on the fundamentals of RBAC or Apache Fortress.  There are better places for that, start with the [Apache Fortress project page](https://directory.apache.org/fortress/).
 
-## Why Apache Groovy?
+### Why Apache Groovy?
 
 It's a dynamic language running on top of the Java Virtual Machine. Its relaxed language syntactical rules allow test cases to be written quickly and with clarity than before using Java.  
 
-## How Does This Sample Work
+## How Sample Works
 
 There's one module for adding the RBAC policy (AdminMgr), another for verifying it (AccessMgr).  
 Each test module uses its wrapper for invoking Apache Fortress manager APIs, in order to do the work.
