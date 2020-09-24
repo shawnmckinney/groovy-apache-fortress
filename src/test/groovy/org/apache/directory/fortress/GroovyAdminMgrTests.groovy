@@ -1,10 +1,8 @@
 package org.apache.directory.fortress
 
-/**
- *
- */
 class GroovyAdminMgrTests
 {
+
     static void main (def args)
     {
         def test = new GroovyAdminMgrTests()
@@ -23,7 +21,6 @@ class GroovyAdminMgrTests
     {
         GroovyAdminMgr admin = new GroovyAdminMgr()
 
-        // Use String constants for operation and entity names for readability.  Of course we could've used them for the actual values too.
         //         Operation      Entity                Attribute Map
         admin.edit( Ids.ADD,    Ids.ORGUNIT,        name: TIds.DEFAULT, type: 'USER' )
         admin.edit( Ids.ADD,    Ids.ROLE,           name: TIds.WASHER )
@@ -75,9 +72,8 @@ class GroovyAdminMgrTests
         admin.edit( Ids.ADD, Ids.PERMGRANT,         roleNm: TIds.TELLER, objName: 'ACCT', opName: 'deposit' )
         admin.edit( Ids.ADD, Ids.PERMGRANT,         roleNm: TIds.TELLER, objName: 'ACCT', opName: 'inquiry' )
         admin.edit( Ids.ADD, Ids.PERMGRANT,         roleNm: TIds.TELLER, objName: 'ACCT', opName: 'withdrawal' )
-
-        //admin.end()
     }
+
 
     def del ( )
     {
@@ -104,7 +100,6 @@ class GroovyAdminMgrTests
         admin.edit( Ids.DELETE, Ids.USER,       userId: 'dewey' )
         admin.edit( Ids.DELETE, Ids.USER,       userId: 'louie' )
         admin.edit( Ids.DELETE, Ids.ORGUNIT,    name: TIds.DEFAULT, type: 'USER' )
-
-        //admin.end()
     }
+
 }

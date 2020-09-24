@@ -1,9 +1,6 @@
 package org.apache.directory.fortress
 
 
-/**
- *
- */
 class GroovyAccessMgrTests
 {
     def abacConstraints()
@@ -36,13 +33,13 @@ class GroovyAccessMgrTests
         GroovyAccessMgr rbac = new GroovyAccessMgr()
         // if we don't load specify locale constraint, neither role will be activated:
         assert ( rbac.start ( options ) )
-        assert ( !rbac.inRole ( TIds.WASHER ) )
-        assert ( !rbac.inRole ( TIds.TELLER ) )
 
+        assert ( !rbac.inRole ( TIds.WASHER ) )
         assert !rbac.canDo('MONEY', "dry")
         assert !rbac.canDo('MONEY', "rinse")
         assert !rbac.canDo('MONEY', "soak")
 
+        assert ( !rbac.inRole ( TIds.TELLER ) )
         assert !rbac.canDo('ACCT', "deposit")
         assert !rbac.canDo('ACCT', "inquiry")
         assert !rbac.canDo('ACCT', "withdrawal")
@@ -56,12 +53,13 @@ class GroovyAccessMgrTests
     {
         GroovyAccessMgr rbac = new GroovyAccessMgr()
         assert ( rbac.start ( options ) )
-        assert ( rbac.inRole ( TIds.WASHER ) )
 
+        assert ( rbac.inRole ( TIds.WASHER ) )
         assert rbac.canDo('MONEY', "dry")
         assert rbac.canDo('MONEY', "rinse")
         assert rbac.canDo('MONEY', "soak")
 
+        assert ( !rbac.inRole ( TIds.TELLER ) )
         assert !rbac.canDo('ACCT', "deposit")
         assert !rbac.canDo('ACCT', "inquiry")
         assert !rbac.canDo('ACCT', "withdrawal")
@@ -80,14 +78,14 @@ class GroovyAccessMgrTests
         assert ( rbac.start ( options ) )
         assert ( rbac.inRole ( TIds.TELLER ) )
         //assert ( rbac.start ( userid, locale: 'East', strength: '2fa', roles: [Ids.WASHER, Ids.TELLER] ) )
-
-        assert !rbac.canDo('MONEY', "dry")
-        assert !rbac.canDo('MONEY', "rinse")
-        assert !rbac.canDo('MONEY', "soak")
-
         assert rbac.canDo( 'ACCT', "deposit")
         assert rbac.canDo( 'ACCT', "inquiry")
         assert rbac.canDo( 'ACCT', "withdrawal")
+
+        assert ( !rbac.inRole ( TIds.WASHER ) )
+        assert !rbac.canDo('MONEY', "dry")
+        assert !rbac.canDo('MONEY', "rinse")
+        assert !rbac.canDo('MONEY', "soak")
 
         //aMgr.end()
         String userId = options.get('userId')

@@ -69,7 +69,6 @@ public class AdminManagerTests extends TestCase
             dsd.setMember( TIds.WASHER );
             adminMgr.createDsdSet( dsd );
 
-            // Huey
             User huey = new User( "Huey", "password" );
             huey.setOu( TIds.DEFAULT );
             adminMgr.addUser( huey );
@@ -85,7 +84,6 @@ public class AdminManagerTests extends TestCase
             locale.setValue( "South" );
             adminMgr.addRoleConstraint( new UserRole( huey.getUserId(), TIds.WASHER ), locale );
 
-            // Dewey
             User dewey = new User( "Dewey", "password" );
             dewey.setOu( TIds.DEFAULT );
             adminMgr.addUser( dewey );
@@ -101,7 +99,6 @@ public class AdminManagerTests extends TestCase
             locale.setValue( "South" );
             adminMgr.addRoleConstraint( new UserRole( dewey.getUserId(), TIds.WASHER ), locale );
 
-            // Louie
             User louie = new User( "Louie", "password" );
             louie.setOu( TIds.DEFAULT );
             adminMgr.addUser( louie );
@@ -117,7 +114,6 @@ public class AdminManagerTests extends TestCase
             locale.setValue( "East" );
             adminMgr.addRoleConstraint( new UserRole( louie.getUserId(), TIds.WASHER ), locale );
 
-            // Permissions
             delAdminMgr.add( new OrgUnit( TIds.DEFAULT, OrgUnit.Type.PERM ) );
 
             PermObj money = adminMgr.addPermObj( new PermObj( "MONEY", TIds.DEFAULT ));

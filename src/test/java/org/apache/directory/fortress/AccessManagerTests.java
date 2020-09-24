@@ -41,6 +41,7 @@ public class AccessManagerTests extends TestCase
     private static final String CLS_NM = AccessManagerTests.class.getName();
     private static final Logger LOG = LoggerFactory.getLogger( CLS_NM );
 
+
     public AccessManagerTests(String name )
     {
         super( name );
@@ -50,45 +51,24 @@ public class AccessManagerTests extends TestCase
     public void testAbacConstraints()
     {
         LOG.info( "Test Huey: ");
-
         // Negative use case, verify constraints are being evaluated:
         isNeither( new User( "Huey", "password") );
-
-        // Huey is a washer in the north:
         isWasher( new User( "Huey", "password"), "north" );
-
-        // Huey is a washer in the south:
         isWasher( new User( "Huey", "password"), "south" );
-
-        // Huey is a teller in the east:
         isTeller( new User( "Huey", "password"), "east" );
 
         LOG.info( "Test Dewey: ");
-
         // Negative use case, verify constraints are being evaluated:
         isNeither( new User( "Dewey", "password") );
-
-        // Dewey is a washer in the east:
         isWasher( new User( "Dewey", "password"), "east" );
-
-        // Dewey is a washer in the south:
         isWasher( new User( "Dewey", "password"), "south" );
-
-        // Dewey is a teller in the north:
         isTeller( new User( "Dewey", "password"), "north" );
 
         LOG.info( "Test Louie: ");
-
         // Negative use case, verify constraints are being evaluated:
         isNeither( new User( "Louie", "password") );
-
-        // Louie is a washer in the east:
         isWasher( new User( "Louie", "password"), "east" );
-
-        // Louie is a washer in the north:
         isWasher( new User( "Louie", "password"), "north" );
-
-        // Louie is a teller in the south:
         isTeller( new User( "Louie", "password"), "south" );
     }
 
@@ -97,16 +77,17 @@ public class AccessManagerTests extends TestCase
         String szLocation = ".isNeither";
         try
         {
-            // Instantiate the AccessMgr implementation.
             AccessMgr accessMgr = AccessMgrFactory.createInstance( );
             Session session = accessMgr.createSession( user, false );
             assertNotNull( session );
+
             List<UserRole> userRoles = session.getRoles();
             assertFalse( userRoles.contains( new UserRole( user.getUserId(), TIds.WASHER ) ) );
-            assertFalse( userRoles.contains( new UserRole( user.getUserId(), TIds.TELLER ) ) );
             assertFalse( accessMgr.checkAccess( session, new Permission("MONEY", "dry" ) ) );
             assertFalse( accessMgr.checkAccess( session, new Permission("MONEY", "rinse" ) ) );
             assertFalse( accessMgr.checkAccess( session, new Permission("MONEY", "soak" ) ) );
+
+            assertFalse( userRoles.contains( new UserRole( user.getUserId(), TIds.TELLER ) ) );
             assertFalse( accessMgr.checkAccess( session, new Permission("ACCT", "deposit" ) ) );
             assertFalse( accessMgr.checkAccess( session, new Permission("ACCT", "inquiry" ) ) );
             assertFalse( accessMgr.checkAccess( session, new Permission("ACCT", "withdrawal" ) ) );
@@ -135,16 +116,17 @@ public class AccessManagerTests extends TestCase
 
         try
         {
-            // Instantiate the AccessMgr implementation.
             AccessMgr accessMgr = AccessMgrFactory.createInstance( );
             Session session = accessMgr.createSession( user, constraints, false );
             assertNotNull( session );
+
             List<UserRole> userRoles = session.getRoles();
             assertFalse( userRoles.contains( new UserRole( user.getUserId(), TIds.WASHER ) ) );
-            assertTrue( userRoles.contains( new UserRole( user.getUserId(), TIds.TELLER ) ) );
             assertFalse( accessMgr.checkAccess( session, new Permission("MONEY", "dry" ) ) );
             assertFalse( accessMgr.checkAccess( session, new Permission("MONEY", "rinse" ) ) );
             assertFalse( accessMgr.checkAccess( session, new Permission("MONEY", "soak" ) ) );
+
+            assertTrue( userRoles.contains( new UserRole( user.getUserId(), TIds.TELLER ) ) );
             assertTrue( accessMgr.checkAccess( session, new Permission("ACCT", "deposit" ) ) );
             assertTrue( accessMgr.checkAccess( session, new Permission("ACCT", "inquiry" ) ) );
             assertTrue( accessMgr.checkAccess( session, new Permission("ACCT", "withdrawal" ) ) );
@@ -172,12 +154,14 @@ public class AccessManagerTests extends TestCase
             AccessMgr accessMgr = AccessMgrFactory.createInstance( );
             Session session = accessMgr.createSession( user, constraints, false );
             assertNotNull( session );
+
             List<UserRole> userRoles = session.getRoles();
             assertTrue( userRoles.contains( new UserRole( user.getUserId(), TIds.WASHER ) ) );
-            assertFalse( userRoles.contains( new UserRole( user.getUserId(), TIds.TELLER ) ) );
             assertTrue( accessMgr.checkAccess( session, new Permission("MONEY", "dry" ) ) );
             assertTrue( accessMgr.checkAccess( session, new Permission("MONEY", "rinse" ) ) );
             assertTrue( accessMgr.checkAccess( session, new Permission("MONEY", "soak" ) ) );
+
+            assertFalse( userRoles.contains( new UserRole( user.getUserId(), TIds.TELLER ) ) );
             assertFalse( accessMgr.checkAccess( session, new Permission("ACCT", "deposit" ) ) );
             assertFalse( accessMgr.checkAccess( session, new Permission("ACCT", "inquiry" ) ) );
             assertFalse( accessMgr.checkAccess( session, new Permission("ACCT", "withdrawal" ) ) );
@@ -189,9 +173,6 @@ public class AccessManagerTests extends TestCase
         }
     }
 
-    /**
-     * Run the Fortress Abac samples.
-     */
     public static Test suite()
     {
         TestSuite suite = new TestSuite();
