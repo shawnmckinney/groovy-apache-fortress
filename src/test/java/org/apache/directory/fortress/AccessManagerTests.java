@@ -131,6 +131,7 @@ public class AccessManagerTests extends TestCase
         constraint = new RoleConstraint();
         constraint.setKey( "strength" );
         constraint.setValue( "2fa" );
+        constraints.add( constraint );
 
         try
         {
