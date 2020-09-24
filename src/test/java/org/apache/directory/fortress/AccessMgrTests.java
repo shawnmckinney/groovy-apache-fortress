@@ -36,13 +36,13 @@ import org.apache.directory.fortress.core.AccessMgrFactory;
 import org.apache.directory.fortress.core.SecurityException;
 
 
-public class AccessManagerTests extends TestCase
+public class AccessMgrTests extends TestCase
 {
-    private static final String CLS_NM = AccessManagerTests.class.getName();
+    private static final String CLS_NM = AccessMgrTests.class.getName();
     private static final Logger LOG = LoggerFactory.getLogger( CLS_NM );
 
 
-    public AccessManagerTests(String name )
+    public AccessMgrTests(String name )
     {
         super( name );
     }
@@ -176,7 +176,7 @@ public class AccessManagerTests extends TestCase
     public static Test suite()
     {
         TestSuite suite = new TestSuite();
-        suite.addTest( new AccessManagerTests( "testAbacConstraints" ) );
+        suite.addTest( new AccessMgrTests( "testAbacConstraints" ) );
         return suite;
     }
 }

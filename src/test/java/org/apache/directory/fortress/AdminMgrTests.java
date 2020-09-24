@@ -29,12 +29,12 @@ import org.apache.directory.fortress.core.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AdminManagerTests extends TestCase
+public class AdminMgrTests extends TestCase
 {
-    private static final String CLS_NM = AdminManagerTests.class.getName();
+    private static final String CLS_NM = AdminMgrTests.class.getName();
     private static final Logger LOG = LoggerFactory.getLogger( CLS_NM );
 
-    public AdminManagerTests(String name )
+    public AdminMgrTests(String name )
     {
         super( name );
     }
@@ -192,8 +192,8 @@ public class AdminManagerTests extends TestCase
     public static Test suite()
     {
         TestSuite suite = new TestSuite();
-        suite.addTest( new AdminManagerTests( "testDelAbacConstraints" ) );
-        suite.addTest( new AdminManagerTests( "testAddAbacConstraints" ) );
+        suite.addTest( new AdminMgrTests( "testDelAbacConstraints" ) );
+        suite.addTest( new AdminMgrTests( "testAddAbacConstraints" ) );
         return suite;
     }
 }
