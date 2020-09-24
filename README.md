@@ -1,21 +1,17 @@
 #### © 2020 iamfortress.net
 
-# What's groovy-apache-fortress?
-
-A wrapper for Apache Fortress APIs written in Groovy.
-
 ## Overview
 
+### What's a Groovy Apache Fortress?
+
 This sample uses Apache Groovy to wrap Apache Fortress [AccessMgr](https://directory.apache.org/fortress/gen-docs/latest/apidocs/org/apache/directory/fortress/core/AccessMgr.html) and [AdminMgr](https://directory.apache.org/fortress/gen-docs/latest/apidocs/org/apache/directory/fortress/core/AdminMgr.html) APIs.  It provides a deep dive into advanced RBAC use cases showing a novel way of invoking its APIs.
-This is not a basic tutorial on the fundamentals of RBAC.  There are other places for that, start with the [Apache Fortress project page](https://directory.apache.org/fortress/).
+It's not a basic tutorial on the fundamentals of RBAC or Apache Fortress.  There are better places for that, start with the [Apache Fortress project page](https://directory.apache.org/fortress/).
 
-## Why Groovy?
+## Why Apache Groovy?
 
-Apache Groovy is a dynamic language that runs on top of the Java Virtual Machine. Its simple language syntax rules allowing test cases to be written quickly and clearly.
+It's a dynamic language running on top of the Java Virtual Machine. Its relaxed language syntactical rules allow test cases to be written quickly and with clarity than before using Java.  
 
-We can iterate through a bunch of scenarios really fast.  
-
-## How this sample works
+## How Does This Sample Work
 
 There's one module for adding the RBAC policy (AdminMgr), another for verifying it (AccessMgr).  
 Each test module uses its wrapper for invoking Apache Fortress manager APIs, in order to do the work.
@@ -30,7 +26,7 @@ Notice how these tests differ when written in Groovy vs Java:
 
 Both do exactly the same thing, Groovy does it with less boilerplate, which makes the code easier to read and write.  Test cases are hard enough to write, anything that makes it easier, helps.
 
-## More about the test cases
+## More About the Test Cases
 
 Apache Fortress can place dynamic constraints on roles.  The idea is limiting when a particular role can be activated, under what conditions.  
 For more on this concept:
@@ -39,11 +35,11 @@ For more on this concept:
  * [Adding Contextual Information to the RBAC Decision](https://symas.com/adding-contextual-information-to-the-rbac-decision/)
  * [Designing an Authorization System: a Dialogue in Five Scenes](https://iamfortress.net/2019/11/23/designing-an-authorization-system-a-dialogue-in-five-scenes/)
 
-## How do I run the test cases?
+## How To Run Test Cases
 
 Run from within a particular Java IDE, like Netbeans, Eclipse or Intellij. Or, run them from the command line.
 
-## What else do I need?
+## What Else Is Needed to Test
 
 An operational Apache Fortress runtime using one of its supported backends: e.g. OpenLDAP or Apache Directory:
  * [README-QUICKSTART-APACHEDS](https://github.com/apache/directory-fortress-core/blob/master/README-QUICKSTART-APACHEDS.md)
@@ -51,7 +47,7 @@ An operational Apache Fortress runtime using one of its supported backends: e.g.
  * [README-QUICKSTART-DOCKER-APACHEDS](https://github.com/apache/directory-fortress-core/blob/master/README-QUICKSTART-DOCKER-APACHEDS.md)
  * [README-QUICKSTART-DOCKER-SLAPD](https://github.com/apache/directory-fortress-core/blob/master/README-QUICKSTART-DOCKER-SLAPD.md)
  
-## Fortress Config w/ System Properties:
+### Fortress Config w/ System Properties:
 
 Fortress config is bootstrapped in one of two ways:
 
@@ -63,17 +59,17 @@ Add to runtime parameters to backend: ```-Dfortress.admin.user=cn=Manager,dc=exa
 
 Modify parameters in the [fortress.properties](src/test/resources/fortress.properties) file.
 
-## Setting Up Config Directory in IDE
+### Setting Up Config Directory in IDE
 
 Be sure to add to the system properties to the runtime classpath of the ide:  ```src/test/resources``` which contains the config files for fortress (if not set via sys props), ehcache and log4j.
 
 Or, add the to the runtime config of the ide as in the System env above.
 
-## Building the sample
+### Building the sample
 
 ```mvn clean install```
 
-## Running tests from command line
+### Running tests from command line
 
 Use the uber jar from the build, located under target folder.
 
