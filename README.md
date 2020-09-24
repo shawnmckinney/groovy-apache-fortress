@@ -1,4 +1,4 @@
-#### © 2020 iamfortress.net
+##### © 2020 iamfortress.net
 
 ## Overview
 
@@ -9,9 +9,9 @@ It's not a basic tutorial on the fundamentals of RBAC or Apache Fortress.  There
 
 ### Why Apache Groovy?
 
-It's a dynamic language running on top of the Java Virtual Machine. Its relaxed language syntactical rules allow test cases to be written quickly and with clarity than before using Java.  
+It's a dynamic language running on top of the Java Virtual Machine. Its relaxed language syntactical rules allow test cases to be written quickly and with better clarity than with traditional Java code.  
 
-## How Sample Works
+## How This Sample Works
 
 There's one module for adding the RBAC policy (AdminMgr), another for verifying it (AccessMgr).  
 Each test module uses its wrapper for invoking Apache Fortress manager APIs, in order to do the work.
