@@ -5,14 +5,9 @@ class GroovyAdminMgrTests
 {
     static void main (def args)
     {
-        new GroovyAdminMgrTests().edit()
+        new GroovyAdminMgrTests().delete()
+        new GroovyAdminMgrTests().add()
         System.exit( 0 );
-    }
-
-    def edit()
-    {
-        del ( )
-        add ( )
     }
 
     def add ( )
@@ -71,7 +66,7 @@ class GroovyAdminMgrTests
         admin.edit( Ids.ADD, Ids.PERMGRANT,         roleNm: TIds.TELLER, objName: 'ACCT', opName: 'withdrawal' )
     }
 
-    def del ( )
+    def delete ( )
     {
         GroovyAdminMgr admin = new GroovyAdminMgr()
         //         Operation      Entity                Attribute Map

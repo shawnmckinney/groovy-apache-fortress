@@ -21,7 +21,15 @@ public class AdminMgrTests extends TestCase
         super( name );
     }
 
-    public void testAddAbacConstraints()
+    public static Test suite()
+    {
+        TestSuite suite = new TestSuite();
+        suite.addTest( new AdminMgrTests( "delete" ) );
+        suite.addTest( new AdminMgrTests( "add" ) );
+        return suite;
+    }
+
+    public void add()
     {
         try
         {
@@ -121,7 +129,7 @@ public class AdminMgrTests extends TestCase
         }
     }
 
-    public void testDelAbacConstraints()
+    public void delete()
     {
         try
         {
@@ -169,13 +177,5 @@ public class AdminMgrTests extends TestCase
             LOG.error( "SecurityException rc=" + ex.getErrorId() + ", msg=" + ex.getMessage(), ex );
             fail( ex.getMessage() );
         }
-    }
-
-    public static Test suite()
-    {
-        TestSuite suite = new TestSuite();
-        suite.addTest( new AdminMgrTests( "testDelAbacConstraints" ) );
-        suite.addTest( new AdminMgrTests( "testAddAbacConstraints" ) );
-        return suite;
     }
 }
