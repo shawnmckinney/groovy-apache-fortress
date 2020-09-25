@@ -42,24 +42,24 @@ public class AccessMgrTests extends TestCase
     {
         LOG.info( "Test Huey: ");
         // Negative test case, verify constraints are being evaluated:
-        isNeither( new User( "Huey", "password") );
-        isWasher( new User( "Huey", "password"), "north" );
-        isWasher( new User( "Huey", "password"), "south" );
-        isTeller( new User( "Huey", "password"), "east" );
+        isNeither( new User( "Huey") );
+        isWasher( new User( "Huey"), "north" );
+        isWasher( new User( "Huey"), "south" );
+        isTeller( new User( "Huey"), "east" );
 
         LOG.info( "Test Dewey: ");
         // Negative test case, verify constraints are being evaluated:
-        isNeither( new User( "Dewey", "password") );
-        isWasher( new User( "Dewey", "password"), "east" );
-        isWasher( new User( "Dewey", "password"), "south" );
-        isTeller( new User( "Dewey", "password"), "north" );
+        isNeither( new User( "Dewey") );
+        isWasher( new User( "Dewey"), "east" );
+        isWasher( new User( "Dewey"), "south" );
+        isTeller( new User( "Dewey"), "north" );
 
         LOG.info( "Test Louie: ");
         // Negative test case, verify constraints are being evaluated:
-        isNeither( new User( "Louie", "password") );
-        isWasher( new User( "Louie", "password"), "east" );
-        isWasher( new User( "Louie", "password"), "north" );
-        isTeller( new User( "Louie", "password"), "south" );
+        isNeither( new User( "Louie") );
+        isWasher( new User( "Louie"), "east" );
+        isWasher( new User( "Louie"), "north" );
+        isTeller( new User( "Louie"), "south" );
     }
 
     public void isNeither( User user )
@@ -68,7 +68,7 @@ public class AccessMgrTests extends TestCase
         try
         {
             AccessMgr accessMgr = AccessMgrFactory.createInstance( );
-            Session session = accessMgr.createSession( user, false );
+            Session session = accessMgr.createSession( user, true );
             assertNotNull( session );
 
             List<UserRole> userRoles = session.getRoles();
@@ -107,7 +107,7 @@ public class AccessMgrTests extends TestCase
         try
         {
             AccessMgr accessMgr = AccessMgrFactory.createInstance( );
-            Session session = accessMgr.createSession( user, constraints, false );
+            Session session = accessMgr.createSession( user, constraints, true );
             assertNotNull( session );
 
             List<UserRole> userRoles = session.getRoles();
@@ -142,7 +142,7 @@ public class AccessMgrTests extends TestCase
         {
             // Instantiate the AccessMgr implementation.
             AccessMgr accessMgr = AccessMgrFactory.createInstance( );
-            Session session = accessMgr.createSession( user, constraints, false );
+            Session session = accessMgr.createSession( user, constraints, true );
             assertNotNull( session );
 
             List<UserRole> userRoles = session.getRoles();

@@ -13,20 +13,21 @@ class GroovyAccessMgrTests
     {
         // These should all pass...
         println( 'Test Huey:')
+
         // Negative test case, verify constraints are being evaluated:
-        isNeither ( userId: 'Huey', password: 'password')
-        isWasher ( userId: 'Huey', password: 'password', locale: 'North')
-        isWasher ( userId: 'Huey', password: 'password', locale: 'South')
-        isTeller ( userId: 'Huey', password: 'password', locale: 'East', strength: '2fa', roles: [TIds.WASHER, TIds.TELLER])
-        isNeither ( userId: 'Huey', password: 'password', locale: 'East')
+        isNeither ( userId: 'Huey')
+        isWasher ( userId: 'Huey', locale: 'North')
+        isWasher ( userId: 'Huey', locale: 'South')
+        isTeller ( userId: 'Huey', locale: 'East', strength: '2fa', roles: [TIds.WASHER, TIds.TELLER])
+        isNeither ( userId: 'Huey', locale: 'East')
 
         println( 'Test Dewey:')
         // Negative test case, verify constraints are being evaluated:
-        isNeither ( userId: 'Dewey', password: 'password')
-        isWasher ( userId: 'Dewey', password: 'password', locale:'East')
-        isWasher ( userId: 'Dewey', password: 'password', locale:'South')
-        isTeller ( userId: 'Dewey', password: 'password', locale: 'North', strength: '2fa')
-        isNeither ( userId: 'Dewey', password: 'password', locale: 'North')
+        isNeither ( userId: 'Dewey')
+        isWasher ( userId: 'Dewey', locale:'East')
+        isWasher ( userId: 'Dewey', locale:'South')
+        isTeller ( userId: 'Dewey', locale: 'North', strength: '2fa')
+        isNeither ( userId: 'Dewey', locale: 'North')
 
         println( 'Test Louie:')
         // Negative test case, verify constraints are being evaluated:
