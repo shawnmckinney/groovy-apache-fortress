@@ -74,8 +74,8 @@ Or, add the to the runtime config of the ide as in the System env above.
 Use the uber jar from the build, located under target folder.
 
 ```
-java -classpath target/fortress-core-groovy-0.0.1-SNAPSHOT-jar-with-dependencies.jar:src/test/resources/ org.apache.directory.fortress.GroovyAdminMgrTests
-java -classpath target/fortress-core-groovy-0.0.1-SNAPSHOT-jar-with-dependencies.jar:src/test/resources/ org.apache.directory.fortress.GroovyAccessMgrTests
+java -classpath target/fortress-core-groovy-1.0.0-SNAPSHOT-jar-with-dependencies.jar:src/test/resources/ org.apache.directory.fortress.GroovyAdminMgrTests
+java -classpath target/fortress-core-groovy-1.0.0-SNAPSHOT-jar-with-dependencies.jar:src/test/resources/ org.apache.directory.fortress.GroovyAccessMgrTests
 ```
 
 Note there will warnings in the console.  This is expected as roles that have been assigned aren't being activated due to constraints not matching.
