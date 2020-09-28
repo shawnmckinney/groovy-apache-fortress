@@ -15,11 +15,18 @@ public class AdminMgrTests extends TestCase
 {
     private static final String CLS_NM = AdminMgrTests.class.getName();
     private static final Logger LOG = LoggerFactory.getLogger( CLS_NM );
-
     public AdminMgrTests(String name )
     {
         super( name );
     }
+
+    public static void main( String[] args )
+    {
+        AccessMgrTests am = new AccessMgrTests( "verify" );
+        am.verify();
+        System.exit( 0 );
+    }
+
 
     public static Test suite()
     {
@@ -28,6 +35,7 @@ public class AdminMgrTests extends TestCase
         suite.addTest( new AdminMgrTests( "add" ) );
         return suite;
     }
+
 
     public void add()
     {

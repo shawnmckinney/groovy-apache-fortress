@@ -69,13 +69,13 @@ Or, add the to the runtime config of the ide as in the System env above.
 
 ```mvn clean install```
 
-### Running tests from command line
+### Running groovy tests from command line
 
 Use the uber jar from the build, located under target folder.
 
 ```
-java -classpath target/fortress-core-groovy-1.0.0-SNAPSHOT-jar-with-dependencies.jar:src/test/resources/ org.apache.directory.fortress.GroovyAdminMgrTests
-java -classpath target/fortress-core-groovy-1.0.0-SNAPSHOT-jar-with-dependencies.jar:src/test/resources/ org.apache.directory.fortress.GroovyAccessMgrTests
+java -classpath target/fortress-core-groovy-1.0.0-jar-with-dependencies.jar:src/test/resources/ org.apache.directory.fortress.GroovyAdminMgrTests
+java -classpath target/fortress-core-groovy-1.0.0-jar-with-dependencies.jar:src/test/resources/ org.apache.directory.fortress.GroovyAccessMgrTests
 ```
 
 Note there will warnings in the console.  This is expected as roles that have been assigned aren't being activated due to constraints not matching.
@@ -88,6 +88,13 @@ Key: locale Value: East
 Key: strength Value: 2fa                                                                                           
 2020-04-12 16:12:025 INFO  VUtil:615 - validateConstraints role [Washer] for userId[huey] was deactivated reason code [2058]   
 End Huey Teller in the East.                                                                                                 
+```
+
+### Running java tests from command line
+
+```
+java -classpath target/fortress-core-groovy-1.0.0-jar-with-dependencies.jar:src/test/resources/:target/test-classes/ org.apache.directory.fortress.AdminMgrTests
+java -classpath target/fortress-core-groovy-1.0.0-jar-with-dependencies.jar:src/test/resources/:target/test-classes/ org.apache.directory.fortress.AccessMgrTests
 ```
 
 ## Understand the security policy

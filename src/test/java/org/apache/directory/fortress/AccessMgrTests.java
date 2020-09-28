@@ -23,10 +23,16 @@ public class AccessMgrTests extends TestCase
     private static final String CLS_NM = AccessMgrTests.class.getName();
     private static final Logger LOG = LoggerFactory.getLogger( CLS_NM );
 
-
     public AccessMgrTests(String name )
     {
         super( name );
+    }
+
+    public static void main( String[] args )
+    {
+        AccessMgrTests am = new AccessMgrTests( "verify" );
+        am.verify();
+        System.exit( 0 );
     }
 
 
