@@ -22,8 +22,9 @@ public class AdminMgrTests extends TestCase
 
     public static void main( String[] args )
     {
-        AccessMgrTests am = new AccessMgrTests( "verify" );
-        am.verify();
+        AdminMgrTests am = new AdminMgrTests( "verify" );
+        am.delete();
+        am.add();
         System.exit( 0 );
     }
 

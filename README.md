@@ -51,13 +51,63 @@ An operational Apache Fortress runtime using one of its supported backends: e.g.
 
 Fortress config is bootstrapped in one of two ways:
 
-1. System Env
+#### System Env
 
 Add to runtime parameters to backend: ```-Dfortress.admin.user=cn=Manager,dc=example,dc=com -Dfortress.admin.pw=secret -Dfortress.config.root=ou=Config,dc=example,dc=com```
 
-2. Config File
+or
 
-Modify parameters in the [fortress.properties](src/test/resources/fortress.properties) file.
+#### Enable an LDAP server:
+
+ a. Copy the example [fortress.properties.example](src/test/resources/fortress.properties.example) file.
+
+ ```bash
+ cp src/test/resources/fortress.properties.example src/test/resources/fortress.properties
+ ```
+
+ b. Edit the file:
+
+ ```bash
+ vi src/test/resources/fortress.properties
+ ```
+
+ Pick either Apache Directory or OpenLDAP server:
+
+ c. Prepare fortress for ApacheDS usage:
+
+ ```properties
+ # This param tells fortress what type of ldap server in use:
+ ldap.server.type=apacheds
+
+ # Use value from [Set Hostname Entry]:
+ host=localhost
+
+ # ApacheDS defaults to this:
+ port=10389
+
+ # These credentials are used for read/write access to all nodes under suffix:
+ admin.user=uid=admin,ou=system
+ admin.pw=secret
+ ```
+
+ -- Or --
+
+ d. Prepare fortress for OpenLDAP usage:
+
+ ```properties
+ # This param tells fortress what type of ldap server in use:
+ ldap.server.type=openldap
+
+ # Use value from [Set Hostname Entry]:
+ host=localhost
+
+ # OpenLDAP defaults to this:
+ port=389
+
+ # These credentials are used for read/write access to all nodes under suffix:
+ admin.user=cn=Manager,dc=example,dc=com
+ admin.pw=secret
+ ```
 
 ### Setting Up Config Directory in IDE
 
